@@ -6,7 +6,7 @@ using Udc.Services.InternalGrpcApi.FakeClient.Providers;
 
 namespace Udc.Services.InternalGrpcApi.FakeClient.Helpers;
 
-public static class ServiceHelper
+public static class ServiceHelpers
 {
     public static GrpcChannel CreateSimpleChannel(string address)
     {

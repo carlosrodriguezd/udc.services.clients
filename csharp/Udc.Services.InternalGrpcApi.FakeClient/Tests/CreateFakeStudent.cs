@@ -20,7 +20,7 @@ public class CreateFakeStudent : BaseTest, IDisposable
     public CreateFakeStudent(ITestOutputHelper output, ITokenProvider tokenProvider)
     {
         _output = output;
-        _channel = Task.Run<GrpcChannel>(async () => await ServiceHelper.CreateAuthenticatedChannelAsync(RequiredAuthenticatedServiceUrl, tokenProvider)).Result;
+        _channel = Task.Run<GrpcChannel>(async () => await ServiceHelpers.CreateAuthenticatedChannelAsync(RequiredAuthenticatedServiceUrl, tokenProvider)).Result;
         _client = new FakeService.FakeServiceClient(_channel);
     }
 
@@ -28,9 +28,6 @@ public class CreateFakeStudent : BaseTest, IDisposable
     public async Task CreatesNewFakeStudent_ThroughTo_InternalFakeGrpcService_Async()
     {
         var newFakeStudent = FakeStudentBuilder.WithRandomValuesAndNif();
-
-        newFakeStudent.FakeBasePerson.FakeBaseEntity.Id = "sdfsdf";
-
         var newFakeStudentIdResponse = await _client.CreateFakeStudentAsync(newFakeStudent, deadline: DateTime.UtcNow.AddMinutes(1));
         newFakeStudent.FakeBasePerson.FakeBaseEntity.Id = newFakeStudentIdResponse.Id;
 

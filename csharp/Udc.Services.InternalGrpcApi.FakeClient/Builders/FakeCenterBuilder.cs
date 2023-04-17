@@ -1,5 +1,4 @@
-﻿using Udc.Services.InternalGrpcApi.FakeClient.Helpers;
-using Udc.Services.Protos.Fake;
+﻿using Udc.Services.Protos.Fake;
 
 namespace Udc.Services.InternalGrpcApi.FakeClient.Builders;
 

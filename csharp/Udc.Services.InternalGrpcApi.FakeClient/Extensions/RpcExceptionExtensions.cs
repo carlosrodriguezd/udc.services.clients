@@ -35,7 +35,6 @@ public static class RpcExceptionExtensions
         }
         return new List<ResourceDuplicateTrailer>();
     }
-
 }
 
 [Serializable]

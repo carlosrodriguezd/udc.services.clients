@@ -18,7 +18,7 @@ public class GetAllFakeBaseCenters : BaseTest, IDisposable
     public GetAllFakeBaseCenters(ITestOutputHelper output)
     {
         _output = output;
-        _channel = ServiceHelper.CreateUnauthenticatedChannel(NotRequiredAuthenticatedServiceUrl);
+        _channel = ServiceHelpers.CreateUnauthenticatedChannel(NotRequiredAuthenticatedServiceUrl);
         _client = new FakeService.FakeServiceClient(_channel);
     }
 

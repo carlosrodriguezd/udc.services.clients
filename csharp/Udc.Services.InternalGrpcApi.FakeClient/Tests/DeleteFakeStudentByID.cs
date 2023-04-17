@@ -21,7 +21,7 @@ public class DeleteFakeStudentByID : BaseTest, IDisposable
     public DeleteFakeStudentByID(ITestOutputHelper output, ITokenProvider tokenProvider)
     {
         _output = output;
-        _channel = Task.Run<GrpcChannel>(async () => await ServiceHelper.CreateAuthenticatedChannelAsync(RequiredAuthenticatedServiceUrl, tokenProvider)).Result;
+        _channel = Task.Run<GrpcChannel>(async () => await ServiceHelpers.CreateAuthenticatedChannelAsync(RequiredAuthenticatedServiceUrl, tokenProvider)).Result;
         _client = new FakeService.FakeServiceClient(_channel);
     }
 
