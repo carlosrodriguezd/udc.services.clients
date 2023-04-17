@@ -88,7 +88,7 @@ class CreateFakeStudentTest extends BaseTest {
 		
 		FakeStudent newFakeStudent = fakeStudentBuilder.withRandomValuesAndNif();
 		CreateFakeStudentResponse newFakeStudentIdResponse = blockingStub.withCallCredentials(callCredentials).createFakeStudent(newFakeStudent);
-		newFakeStudent = fakeStudentBuilder.WithNewID(newFakeStudent, newFakeStudentIdResponse.getId());
+		newFakeStudent = fakeStudentBuilder.withNewID(newFakeStudent, newFakeStudentIdResponse.getId());
 		
 		GetFakeStudentByIDRequest getNewFakeStudentIDrequest = GetFakeStudentByIDRequest.newBuilder().setId(newFakeStudentIdResponse.getId()).build();
 		FakeStudent newFakeStudentFromService = blockingStub.withCallCredentials(callCredentials).getFakeStudentByID(getNewFakeStudentIDrequest);		
@@ -105,13 +105,13 @@ class CreateFakeStudentTest extends BaseTest {
 		CreateFakeStudentResponse newFakeStudentIdResponse = blockingStub.withCallCredentials(callCredentials).createFakeStudent(newFakeStudent);
 
 		StatusRuntimeException ex = assertThrows(StatusRuntimeException.class, () -> {
-    		FakeStudent newDuplicateFakeStudentByIDDocument = fakeStudentBuilder.WithRandomValuesAndEmptyNif();
-    	    newDuplicateFakeStudentByIDDocument = fakeStudentBuilder.WithNewIDDocumentNumber(
+    		FakeStudent newDuplicateFakeStudentByIDDocument = fakeStudentBuilder.withRandomValuesAndNif();
+    	    newDuplicateFakeStudentByIDDocument = fakeStudentBuilder.withNewIDDocumentNumber(
     				newDuplicateFakeStudentByIDDocument, newFakeStudent.getFakeBasePerson().getIdDocumentNumber(), newFakeStudent.getFakeBasePerson().getFakeIdDocumentType());
         	blockingStub.withCallCredentials(callCredentials).createFakeStudent(newDuplicateFakeStudentByIDDocument);
     	});
 		
-	    List<ResourceDuplicateTrailer> errors  = ServiceHelpers.GetResourceDuplicateErrors(ex);
+	    List<ResourceDuplicateTrailer> errors  = ServiceHelpers.getResourceDuplicateErrors(ex);
 	    assertEquals(Status.ALREADY_EXISTS.getCode(), ex.getStatus().getCode());
         assertTrue(errors.size() > 0);
         assertEquals(newFakeStudent.getClass().getSimpleName(), errors.get(0).getResource());
