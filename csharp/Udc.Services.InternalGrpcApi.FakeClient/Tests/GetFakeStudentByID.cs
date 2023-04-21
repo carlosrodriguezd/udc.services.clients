@@ -29,14 +29,15 @@ public class GetFakeStudentByID : BaseTest, IDisposable
     public async Task GetsExistingFakeStudentById_From_InternalFakeGrpcService_Async()
     {
         var newFakeStudent = FakeStudentBuilder.WithRandomValuesAndNif();
-        var newFakeStudentIdResponse = await _client.CreateFakeStudentAsync(newFakeStudent, deadline: DateTime.UtcNow.AddMinutes(1));
+        CreateFakeStudentRequest newFakeStudentRequest = new() { FakeStudent = newFakeStudent };
+        var newFakeStudentIdResponse = await _client.CreateFakeStudentAsync(newFakeStudentRequest, deadline: DateTime.UtcNow.AddMinutes(1));
         newFakeStudent.FakeBasePerson.FakeBaseEntity.Id = newFakeStudentIdResponse.Id;
         _output.WriteLine($"NewFakeStudentId: {newFakeStudent.FakeBasePerson.FakeBaseEntity.Id}");
 
         GetFakeStudentByIDRequest request = new() { Id = newFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
-        var fakeStudentFromService = await _client.GetFakeStudentByIDAsync(request, deadline: DateTime.UtcNow.AddMinutes(1));
+        var fakeStudentResponseFromService = await _client.GetFakeStudentByIDAsync(request, deadline: DateTime.UtcNow.AddMinutes(1));
 
-        Assert.Equal<FakeStudent>(newFakeStudent, fakeStudentFromService);
+        Assert.Equal<FakeStudent>(newFakeStudent, fakeStudentResponseFromService.FakeStudent);
 
         DeleteFakeStudentByIDRequest deleteRequest = new() { Id = newFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
         await _client.DeleteFakeStudentByIDAsync(deleteRequest, deadline: DateTime.UtcNow.AddMinutes(1));

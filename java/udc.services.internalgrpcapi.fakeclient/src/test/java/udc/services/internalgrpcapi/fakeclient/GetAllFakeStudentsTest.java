@@ -13,11 +13,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import com.google.protobuf.Empty;
-import com.google.protobuf.StringValue;
 
 import io.grpc.CallCredentials;
-import io.grpc.Grpc;
-import io.grpc.InsecureChannelCredentials;
 import io.grpc.ManagedChannel;
 import io.grpc.netty.shaded.io.grpc.netty.NegotiationType;
 import io.grpc.netty.shaded.io.grpc.netty.NettyChannelBuilder;
@@ -32,12 +29,11 @@ import io.grpc.netty.shaded.io.netty.handler.ssl.util.InsecureTrustManagerFactor
 import udc.services.internalgrpcapi.fakeclient.builders.FakeStudentBuilder;
 import udc.services.internalgrpcapi.fakeclient.helpers.ServiceHelpers;
 import udc.services.internalgrpcapi.fakeclient.oauth.BearerToken;
+import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentRequest;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentResponse;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.DeleteFakeStudentByIDRequest;
-import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeBaseCenters;
-import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeBasePerson;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeStudent;
-import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeStudents;
+import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeStudentsResponse;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.FakeServiceGrpc;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.FakeServiceGrpc.FakeServiceBlockingStub;
 
@@ -54,7 +50,7 @@ class GetAllFakeStudentsTest extends BaseTest {
     @BeforeAll
     public void init() throws Exception {
     	
-    	callCredentials = new BearerToken(ServiceHelpers.getBearerToken(oAuthServerUrl, clientId, clientSecret));
+    	callCredentials = new BearerToken(ServiceHelpers.getBearerToken(oAuthAccessTokenEndpoint, clientId, clientSecret));
         SslContext sslContext = SslContextBuilder.forClient()
         		.sslProvider(SslProvider.OPENSSL)
         		.protocols(TLS_PROTOCOL)
@@ -71,18 +67,19 @@ class GetAllFakeStudentsTest extends BaseTest {
 	void getsAllFakeStudents_From_InternalFakeGrpcService() {
 		
 		FakeStudent existingFakeStudent = fakeStudentBuilder.withRandomValuesAndNif();
-		CreateFakeStudentResponse existingFakeStudentIdResponse = blockingStub.withCallCredentials(callCredentials).createFakeStudent(existingFakeStudent);
+        CreateFakeStudentRequest existingFakeStudentRequest = CreateFakeStudentRequest.newBuilder().setFakeStudent(existingFakeStudent).build();
+		CreateFakeStudentResponse existingFakeStudentIdResponse = blockingStub.withCallCredentials(callCredentials).createFakeStudent(existingFakeStudentRequest);
 		existingFakeStudent = fakeStudentBuilder.withNewID(existingFakeStudent, existingFakeStudentIdResponse.getId());
 		logger.info(String.format("ExistingFakeStudentId: %s", existingFakeStudentIdResponse.getId()));
 
-		FakeStudents fakeStudentsFromService = blockingStub.withCallCredentials(callCredentials).getAllFakeStudents(Empty.newBuilder().build());
+		GetAllFakeStudentsResponse fakeStudentsResponseFromService = blockingStub.withCallCredentials(callCredentials).getAllFakeStudents(Empty.newBuilder().build());
 		
-		assertTrue(fakeStudentsFromService.getFakeStudentsList().contains(existingFakeStudent));
+		assertTrue(fakeStudentsResponseFromService.getFakeStudentsList().contains(existingFakeStudent));
 		
 		DeleteFakeStudentByIDRequest deleteRequest = DeleteFakeStudentByIDRequest.newBuilder().setId(existingFakeStudent.getFakeBasePerson().getFakeBaseEntity().getId().getValue()).build();
 		blockingStub.withCallCredentials(callCredentials).deleteFakeStudentByID(deleteRequest);
 	}
-
+	
 	@AfterAll  
 	public void finish() throws InterruptedException {  
 		

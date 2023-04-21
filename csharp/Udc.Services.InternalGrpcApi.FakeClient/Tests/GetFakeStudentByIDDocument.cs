@@ -28,14 +28,15 @@ public class GetFakeStudentByIDDocument : BaseTest, IDisposable
     public async Task GetsExistingFakeStudentByIDDocument_From_InternalFakeGrpcService_Async()
     {
         var existingFakeStudent = FakeStudentBuilder.WithRandomValuesAndNif();
-        var existingFakeStudentIdResponse = await _client.CreateFakeStudentAsync(existingFakeStudent, deadline: DateTime.UtcNow.AddMinutes(1));
+        CreateFakeStudentRequest existingFakeStudentRequest = new() { FakeStudent = existingFakeStudent };
+        var existingFakeStudentIdResponse = await _client.CreateFakeStudentAsync(existingFakeStudentRequest, deadline: DateTime.UtcNow.AddMinutes(1));
         existingFakeStudent.FakeBasePerson.FakeBaseEntity.Id = existingFakeStudentIdResponse.Id;
         _output.WriteLine($"ExisitingFakeStudentId: {existingFakeStudent.FakeBasePerson.FakeBaseEntity.Id}");
 
-        GetFakeStudentByIDDocumentRequest request = new() { IdDocumentNumber = existingFakeStudent.FakeBasePerson.IdDocumentNumber, FakeIdDocumentType = existingFakeStudent.FakeBasePerson.FakeIdDocumentType };
-        var fakeStudentFromService = await _client.GetFakeStudentByIDDocumentAsync(request, deadline: DateTime.UtcNow.AddMinutes(1));
+        GetFakeStudentByIDDocumentRequest request = new() { FakeIdDocument = existingFakeStudent.FakeBasePerson.FakeIdDocument };
+        var fakeStudentResponseFromService = await _client.GetFakeStudentByIDDocumentAsync(request, deadline: DateTime.UtcNow.AddMinutes(1));
 
-        Assert.Equal<FakeStudent>(existingFakeStudent, fakeStudentFromService);
+        Assert.Equal<FakeStudent>(existingFakeStudent, fakeStudentResponseFromService.FakeStudent);
 
         DeleteFakeStudentByIDRequest deleteRequest = new() { Id = existingFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
         await _client.DeleteFakeStudentByIDAsync(deleteRequest, deadline: DateTime.UtcNow.AddMinutes(1));
@@ -45,7 +46,7 @@ public class GetFakeStudentByIDDocument : BaseTest, IDisposable
     public async Task CantGetNotExistingFakeStudentByIDDocument_From_InternalFakeGrpcService_Async()
     {
         var fakeStudent = FakeStudentBuilder.Build();
-        GetFakeStudentByIDDocumentRequest request = new() { IdDocumentNumber = FakeStudentBuilder.TestNotExistingIDDocument, FakeIdDocumentType = fakeStudent.FakeBasePerson.FakeIdDocumentType };
+        GetFakeStudentByIDDocumentRequest request = new() { FakeIdDocument = FakeStudentBuilder.TestNotExistingFakeIDDocument };
 
         var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.GetFakeStudentByIDDocumentAsync(request, deadline: DateTime.UtcNow.AddMinutes(1)));
         Assert.Equal(StatusCode.NotFound, ex.StatusCode);
@@ -55,42 +56,45 @@ public class GetFakeStudentByIDDocument : BaseTest, IDisposable
     public async Task CantValidateEmptyIDDocumentNumber_In_GetFakeStudentByIDDocument_From_InternalFakeGrpcService_Async()
     {
         var fakeStudent = FakeStudentBuilder.Build();
-        GetFakeStudentByIDDocumentRequest request = new() { IdDocumentNumber = FakeStudentBuilder.TestEmptyString, FakeIdDocumentType = fakeStudent.FakeBasePerson.FakeIdDocumentType };
+        GetFakeStudentByIDDocumentRequest request = new() { FakeIdDocument = FakeStudentBuilder.TestEmptyFakeIDDocumentNumber };
 
         var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.GetFakeStudentByIDDocumentAsync(request, deadline: DateTime.UtcNow.AddMinutes(1)));
 
         var errors = ex.GetValidationErrors();
         Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
         Assert.NotEmpty(errors);
-        Assert.All<ValidationTrailer>(errors, error => Assert.Equal(nameof(fakeStudent.FakeBasePerson.IdDocumentNumber), error.PropertyName, ignoreCase: true));
+        var expectedPropertyName = $"{request.FakeIdDocument.GetType().Name}.{nameof(fakeStudent.FakeBasePerson.FakeIdDocument.Number)}";
+        Assert.All<ValidationTrailer>(errors, error => Assert.Equal(expectedPropertyName, error.PropertyName, ignoreCase: true));
     }
 
     [Fact]
     public async Task CantValidateInvalidIDDocumentNumber_In_GetFakeStudentByIDDocument_From_InternalFakeGrpcService_Async()
     {
         var fakeStudent = FakeStudentBuilder.Build();
-        GetFakeStudentByIDDocumentRequest request = new() { IdDocumentNumber = FakeStudentBuilder.TestInvalidIDDocument, FakeIdDocumentType = fakeStudent.FakeBasePerson.FakeIdDocumentType };
+        GetFakeStudentByIDDocumentRequest request = new() { FakeIdDocument = FakeStudentBuilder.TestInvalidFakeIDDocument };
 
         var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.GetFakeStudentByIDDocumentAsync(request, deadline: DateTime.UtcNow.AddMinutes(1)));
 
         var errors = ex.GetValidationErrors();
         Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
         Assert.NotEmpty(errors);
-        Assert.All<ValidationTrailer>(errors, error => Assert.Equal(nameof(fakeStudent.FakeBasePerson.IdDocumentNumber), error.PropertyName, ignoreCase: true));
+        var expectedPropertyName = $"{request.FakeIdDocument.GetType().Name}.{nameof(fakeStudent.FakeBasePerson.FakeIdDocument.Number)}";
+        Assert.All<ValidationTrailer>(errors, error => Assert.Equal(expectedPropertyName, error.PropertyName, ignoreCase: true));
     }
 
     [Fact]
     public async Task CantValidateEmptyIDDocumentType_In_GetFakeStudentByIDDocument_From_InternalFakeGrpcService_Async()
     {
         var fakeStudent = FakeStudentBuilder.Build();
-        GetFakeStudentByIDDocumentRequest request = new() { IdDocumentNumber = fakeStudent.FakeBasePerson.IdDocumentNumber, FakeIdDocumentType = FakeIDDocumentType.Unspecified };
+        GetFakeStudentByIDDocumentRequest request = new() { FakeIdDocument = FakeStudentBuilder.TestEmptyFakeIDDocumentType };
 
         var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.GetFakeStudentByIDDocumentAsync(request, deadline: DateTime.UtcNow.AddMinutes(1)));
 
         var errors = ex.GetValidationErrors();
         Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
         Assert.NotEmpty(errors);
-        Assert.All<ValidationTrailer>(errors, error => Assert.Equal(nameof(fakeStudent.FakeBasePerson.FakeIdDocumentType), error.PropertyName, ignoreCase: true));
+        var expectedPropertyName = $"{request.FakeIdDocument.GetType().Name}.{nameof(fakeStudent.FakeBasePerson.FakeIdDocument.Type)}";
+        Assert.All<ValidationTrailer>(errors, error => Assert.Equal(expectedPropertyName, error.PropertyName, ignoreCase: true));
     }
 
     public void Dispose()

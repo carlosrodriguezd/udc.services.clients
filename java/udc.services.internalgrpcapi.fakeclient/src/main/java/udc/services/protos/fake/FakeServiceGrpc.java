@@ -1,4 +1,4 @@
-package udc.services.internalgrpcapi.fakeclient.protos.fake;
+package udc.services.protos.fake;
 
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 
@@ -24,28 +24,28 @@ public final class FakeServiceGrpc {
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<com.google.protobuf.Empty,
-      udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeBaseCentersResponse> getGetAllFakeBaseCentersMethod;
+      udc.services.protos.fake.Fake.GetAllFakeBaseCentersResponse> getGetAllFakeBaseCentersMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "GetAllFakeBaseCenters",
       requestType = com.google.protobuf.Empty.class,
-      responseType = udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeBaseCentersResponse.class,
+      responseType = udc.services.protos.fake.Fake.GetAllFakeBaseCentersResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<com.google.protobuf.Empty,
-      udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeBaseCentersResponse> getGetAllFakeBaseCentersMethod() {
-    io.grpc.MethodDescriptor<com.google.protobuf.Empty, udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeBaseCentersResponse> getGetAllFakeBaseCentersMethod;
+      udc.services.protos.fake.Fake.GetAllFakeBaseCentersResponse> getGetAllFakeBaseCentersMethod() {
+    io.grpc.MethodDescriptor<com.google.protobuf.Empty, udc.services.protos.fake.Fake.GetAllFakeBaseCentersResponse> getGetAllFakeBaseCentersMethod;
     if ((getGetAllFakeBaseCentersMethod = FakeServiceGrpc.getGetAllFakeBaseCentersMethod) == null) {
       synchronized (FakeServiceGrpc.class) {
         if ((getGetAllFakeBaseCentersMethod = FakeServiceGrpc.getGetAllFakeBaseCentersMethod) == null) {
           FakeServiceGrpc.getGetAllFakeBaseCentersMethod = getGetAllFakeBaseCentersMethod =
-              io.grpc.MethodDescriptor.<com.google.protobuf.Empty, udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeBaseCentersResponse>newBuilder()
+              io.grpc.MethodDescriptor.<com.google.protobuf.Empty, udc.services.protos.fake.Fake.GetAllFakeBaseCentersResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetAllFakeBaseCenters"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.google.protobuf.Empty.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeBaseCentersResponse.getDefaultInstance()))
+                  udc.services.protos.fake.Fake.GetAllFakeBaseCentersResponse.getDefaultInstance()))
               .setSchemaDescriptor(new FakeServiceMethodDescriptorSupplier("GetAllFakeBaseCenters"))
               .build();
         }
@@ -55,28 +55,28 @@ public final class FakeServiceGrpc {
   }
 
   private static volatile io.grpc.MethodDescriptor<com.google.protobuf.Empty,
-      udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeStudentsResponse> getGetAllFakeStudentsMethod;
+      udc.services.protos.fake.Fake.GetAllFakeStudentsResponse> getGetAllFakeStudentsMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "GetAllFakeStudents",
       requestType = com.google.protobuf.Empty.class,
-      responseType = udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeStudentsResponse.class,
+      responseType = udc.services.protos.fake.Fake.GetAllFakeStudentsResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<com.google.protobuf.Empty,
-      udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeStudentsResponse> getGetAllFakeStudentsMethod() {
-    io.grpc.MethodDescriptor<com.google.protobuf.Empty, udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeStudentsResponse> getGetAllFakeStudentsMethod;
+      udc.services.protos.fake.Fake.GetAllFakeStudentsResponse> getGetAllFakeStudentsMethod() {
+    io.grpc.MethodDescriptor<com.google.protobuf.Empty, udc.services.protos.fake.Fake.GetAllFakeStudentsResponse> getGetAllFakeStudentsMethod;
     if ((getGetAllFakeStudentsMethod = FakeServiceGrpc.getGetAllFakeStudentsMethod) == null) {
       synchronized (FakeServiceGrpc.class) {
         if ((getGetAllFakeStudentsMethod = FakeServiceGrpc.getGetAllFakeStudentsMethod) == null) {
           FakeServiceGrpc.getGetAllFakeStudentsMethod = getGetAllFakeStudentsMethod =
-              io.grpc.MethodDescriptor.<com.google.protobuf.Empty, udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeStudentsResponse>newBuilder()
+              io.grpc.MethodDescriptor.<com.google.protobuf.Empty, udc.services.protos.fake.Fake.GetAllFakeStudentsResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetAllFakeStudents"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.google.protobuf.Empty.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeStudentsResponse.getDefaultInstance()))
+                  udc.services.protos.fake.Fake.GetAllFakeStudentsResponse.getDefaultInstance()))
               .setSchemaDescriptor(new FakeServiceMethodDescriptorSupplier("GetAllFakeStudents"))
               .build();
         }
@@ -85,29 +85,29 @@ public final class FakeServiceGrpc {
     return getGetAllFakeStudentsMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentRequest,
-      udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentResponse> getGetFakeStudentByIDDocumentMethod;
+  private static volatile io.grpc.MethodDescriptor<udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentRequest,
+      udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentResponse> getGetFakeStudentByIDDocumentMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "GetFakeStudentByIDDocument",
-      requestType = udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentRequest.class,
-      responseType = udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentResponse.class,
+      requestType = udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentRequest.class,
+      responseType = udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentRequest,
-      udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentResponse> getGetFakeStudentByIDDocumentMethod() {
-    io.grpc.MethodDescriptor<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentRequest, udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentResponse> getGetFakeStudentByIDDocumentMethod;
+  public static io.grpc.MethodDescriptor<udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentRequest,
+      udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentResponse> getGetFakeStudentByIDDocumentMethod() {
+    io.grpc.MethodDescriptor<udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentRequest, udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentResponse> getGetFakeStudentByIDDocumentMethod;
     if ((getGetFakeStudentByIDDocumentMethod = FakeServiceGrpc.getGetFakeStudentByIDDocumentMethod) == null) {
       synchronized (FakeServiceGrpc.class) {
         if ((getGetFakeStudentByIDDocumentMethod = FakeServiceGrpc.getGetFakeStudentByIDDocumentMethod) == null) {
           FakeServiceGrpc.getGetFakeStudentByIDDocumentMethod = getGetFakeStudentByIDDocumentMethod =
-              io.grpc.MethodDescriptor.<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentRequest, udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentResponse>newBuilder()
+              io.grpc.MethodDescriptor.<udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentRequest, udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetFakeStudentByIDDocument"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentRequest.getDefaultInstance()))
+                  udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentResponse.getDefaultInstance()))
+                  udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentResponse.getDefaultInstance()))
               .setSchemaDescriptor(new FakeServiceMethodDescriptorSupplier("GetFakeStudentByIDDocument"))
               .build();
         }
@@ -116,29 +116,29 @@ public final class FakeServiceGrpc {
     return getGetFakeStudentByIDDocumentMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDRequest,
-      udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDResponse> getGetFakeStudentByIDMethod;
+  private static volatile io.grpc.MethodDescriptor<udc.services.protos.fake.Fake.GetFakeStudentByIDRequest,
+      udc.services.protos.fake.Fake.GetFakeStudentByIDResponse> getGetFakeStudentByIDMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "GetFakeStudentByID",
-      requestType = udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDRequest.class,
-      responseType = udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDResponse.class,
+      requestType = udc.services.protos.fake.Fake.GetFakeStudentByIDRequest.class,
+      responseType = udc.services.protos.fake.Fake.GetFakeStudentByIDResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDRequest,
-      udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDResponse> getGetFakeStudentByIDMethod() {
-    io.grpc.MethodDescriptor<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDRequest, udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDResponse> getGetFakeStudentByIDMethod;
+  public static io.grpc.MethodDescriptor<udc.services.protos.fake.Fake.GetFakeStudentByIDRequest,
+      udc.services.protos.fake.Fake.GetFakeStudentByIDResponse> getGetFakeStudentByIDMethod() {
+    io.grpc.MethodDescriptor<udc.services.protos.fake.Fake.GetFakeStudentByIDRequest, udc.services.protos.fake.Fake.GetFakeStudentByIDResponse> getGetFakeStudentByIDMethod;
     if ((getGetFakeStudentByIDMethod = FakeServiceGrpc.getGetFakeStudentByIDMethod) == null) {
       synchronized (FakeServiceGrpc.class) {
         if ((getGetFakeStudentByIDMethod = FakeServiceGrpc.getGetFakeStudentByIDMethod) == null) {
           FakeServiceGrpc.getGetFakeStudentByIDMethod = getGetFakeStudentByIDMethod =
-              io.grpc.MethodDescriptor.<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDRequest, udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDResponse>newBuilder()
+              io.grpc.MethodDescriptor.<udc.services.protos.fake.Fake.GetFakeStudentByIDRequest, udc.services.protos.fake.Fake.GetFakeStudentByIDResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetFakeStudentByID"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDRequest.getDefaultInstance()))
+                  udc.services.protos.fake.Fake.GetFakeStudentByIDRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDResponse.getDefaultInstance()))
+                  udc.services.protos.fake.Fake.GetFakeStudentByIDResponse.getDefaultInstance()))
               .setSchemaDescriptor(new FakeServiceMethodDescriptorSupplier("GetFakeStudentByID"))
               .build();
         }
@@ -147,29 +147,29 @@ public final class FakeServiceGrpc {
     return getGetFakeStudentByIDMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentRequest,
-      udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentResponse> getCreateFakeStudentMethod;
+  private static volatile io.grpc.MethodDescriptor<udc.services.protos.fake.Fake.CreateFakeStudentRequest,
+      udc.services.protos.fake.Fake.CreateFakeStudentResponse> getCreateFakeStudentMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "CreateFakeStudent",
-      requestType = udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentRequest.class,
-      responseType = udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentResponse.class,
+      requestType = udc.services.protos.fake.Fake.CreateFakeStudentRequest.class,
+      responseType = udc.services.protos.fake.Fake.CreateFakeStudentResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentRequest,
-      udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentResponse> getCreateFakeStudentMethod() {
-    io.grpc.MethodDescriptor<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentRequest, udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentResponse> getCreateFakeStudentMethod;
+  public static io.grpc.MethodDescriptor<udc.services.protos.fake.Fake.CreateFakeStudentRequest,
+      udc.services.protos.fake.Fake.CreateFakeStudentResponse> getCreateFakeStudentMethod() {
+    io.grpc.MethodDescriptor<udc.services.protos.fake.Fake.CreateFakeStudentRequest, udc.services.protos.fake.Fake.CreateFakeStudentResponse> getCreateFakeStudentMethod;
     if ((getCreateFakeStudentMethod = FakeServiceGrpc.getCreateFakeStudentMethod) == null) {
       synchronized (FakeServiceGrpc.class) {
         if ((getCreateFakeStudentMethod = FakeServiceGrpc.getCreateFakeStudentMethod) == null) {
           FakeServiceGrpc.getCreateFakeStudentMethod = getCreateFakeStudentMethod =
-              io.grpc.MethodDescriptor.<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentRequest, udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentResponse>newBuilder()
+              io.grpc.MethodDescriptor.<udc.services.protos.fake.Fake.CreateFakeStudentRequest, udc.services.protos.fake.Fake.CreateFakeStudentResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "CreateFakeStudent"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentRequest.getDefaultInstance()))
+                  udc.services.protos.fake.Fake.CreateFakeStudentRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentResponse.getDefaultInstance()))
+                  udc.services.protos.fake.Fake.CreateFakeStudentResponse.getDefaultInstance()))
               .setSchemaDescriptor(new FakeServiceMethodDescriptorSupplier("CreateFakeStudent"))
               .build();
         }
@@ -178,27 +178,27 @@ public final class FakeServiceGrpc {
     return getCreateFakeStudentMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.DeleteFakeStudentByIDRequest,
+  private static volatile io.grpc.MethodDescriptor<udc.services.protos.fake.Fake.DeleteFakeStudentByIDRequest,
       com.google.protobuf.Empty> getDeleteFakeStudentByIDMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "DeleteFakeStudentByID",
-      requestType = udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.DeleteFakeStudentByIDRequest.class,
+      requestType = udc.services.protos.fake.Fake.DeleteFakeStudentByIDRequest.class,
       responseType = com.google.protobuf.Empty.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.DeleteFakeStudentByIDRequest,
+  public static io.grpc.MethodDescriptor<udc.services.protos.fake.Fake.DeleteFakeStudentByIDRequest,
       com.google.protobuf.Empty> getDeleteFakeStudentByIDMethod() {
-    io.grpc.MethodDescriptor<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.DeleteFakeStudentByIDRequest, com.google.protobuf.Empty> getDeleteFakeStudentByIDMethod;
+    io.grpc.MethodDescriptor<udc.services.protos.fake.Fake.DeleteFakeStudentByIDRequest, com.google.protobuf.Empty> getDeleteFakeStudentByIDMethod;
     if ((getDeleteFakeStudentByIDMethod = FakeServiceGrpc.getDeleteFakeStudentByIDMethod) == null) {
       synchronized (FakeServiceGrpc.class) {
         if ((getDeleteFakeStudentByIDMethod = FakeServiceGrpc.getDeleteFakeStudentByIDMethod) == null) {
           FakeServiceGrpc.getDeleteFakeStudentByIDMethod = getDeleteFakeStudentByIDMethod =
-              io.grpc.MethodDescriptor.<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.DeleteFakeStudentByIDRequest, com.google.protobuf.Empty>newBuilder()
+              io.grpc.MethodDescriptor.<udc.services.protos.fake.Fake.DeleteFakeStudentByIDRequest, com.google.protobuf.Empty>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "DeleteFakeStudentByID"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.DeleteFakeStudentByIDRequest.getDefaultInstance()))
+                  udc.services.protos.fake.Fake.DeleteFakeStudentByIDRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.google.protobuf.Empty.getDefaultInstance()))
               .setSchemaDescriptor(new FakeServiceMethodDescriptorSupplier("DeleteFakeStudentByID"))
@@ -209,27 +209,27 @@ public final class FakeServiceGrpc {
     return getDeleteFakeStudentByIDMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpdateFakeStudentRequest,
+  private static volatile io.grpc.MethodDescriptor<udc.services.protos.fake.Fake.UpdateFakeStudentRequest,
       com.google.protobuf.Empty> getUpdateFakeStudentMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "UpdateFakeStudent",
-      requestType = udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpdateFakeStudentRequest.class,
+      requestType = udc.services.protos.fake.Fake.UpdateFakeStudentRequest.class,
       responseType = com.google.protobuf.Empty.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpdateFakeStudentRequest,
+  public static io.grpc.MethodDescriptor<udc.services.protos.fake.Fake.UpdateFakeStudentRequest,
       com.google.protobuf.Empty> getUpdateFakeStudentMethod() {
-    io.grpc.MethodDescriptor<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpdateFakeStudentRequest, com.google.protobuf.Empty> getUpdateFakeStudentMethod;
+    io.grpc.MethodDescriptor<udc.services.protos.fake.Fake.UpdateFakeStudentRequest, com.google.protobuf.Empty> getUpdateFakeStudentMethod;
     if ((getUpdateFakeStudentMethod = FakeServiceGrpc.getUpdateFakeStudentMethod) == null) {
       synchronized (FakeServiceGrpc.class) {
         if ((getUpdateFakeStudentMethod = FakeServiceGrpc.getUpdateFakeStudentMethod) == null) {
           FakeServiceGrpc.getUpdateFakeStudentMethod = getUpdateFakeStudentMethod =
-              io.grpc.MethodDescriptor.<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpdateFakeStudentRequest, com.google.protobuf.Empty>newBuilder()
+              io.grpc.MethodDescriptor.<udc.services.protos.fake.Fake.UpdateFakeStudentRequest, com.google.protobuf.Empty>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "UpdateFakeStudent"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpdateFakeStudentRequest.getDefaultInstance()))
+                  udc.services.protos.fake.Fake.UpdateFakeStudentRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.google.protobuf.Empty.getDefaultInstance()))
               .setSchemaDescriptor(new FakeServiceMethodDescriptorSupplier("UpdateFakeStudent"))
@@ -240,29 +240,29 @@ public final class FakeServiceGrpc {
     return getUpdateFakeStudentMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentRequest,
-      udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentResponse> getUpsertFakeStudentMethod;
+  private static volatile io.grpc.MethodDescriptor<udc.services.protos.fake.Fake.UpsertFakeStudentRequest,
+      udc.services.protos.fake.Fake.UpsertFakeStudentResponse> getUpsertFakeStudentMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "UpsertFakeStudent",
-      requestType = udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentRequest.class,
-      responseType = udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentResponse.class,
+      requestType = udc.services.protos.fake.Fake.UpsertFakeStudentRequest.class,
+      responseType = udc.services.protos.fake.Fake.UpsertFakeStudentResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentRequest,
-      udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentResponse> getUpsertFakeStudentMethod() {
-    io.grpc.MethodDescriptor<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentRequest, udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentResponse> getUpsertFakeStudentMethod;
+  public static io.grpc.MethodDescriptor<udc.services.protos.fake.Fake.UpsertFakeStudentRequest,
+      udc.services.protos.fake.Fake.UpsertFakeStudentResponse> getUpsertFakeStudentMethod() {
+    io.grpc.MethodDescriptor<udc.services.protos.fake.Fake.UpsertFakeStudentRequest, udc.services.protos.fake.Fake.UpsertFakeStudentResponse> getUpsertFakeStudentMethod;
     if ((getUpsertFakeStudentMethod = FakeServiceGrpc.getUpsertFakeStudentMethod) == null) {
       synchronized (FakeServiceGrpc.class) {
         if ((getUpsertFakeStudentMethod = FakeServiceGrpc.getUpsertFakeStudentMethod) == null) {
           FakeServiceGrpc.getUpsertFakeStudentMethod = getUpsertFakeStudentMethod =
-              io.grpc.MethodDescriptor.<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentRequest, udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentResponse>newBuilder()
+              io.grpc.MethodDescriptor.<udc.services.protos.fake.Fake.UpsertFakeStudentRequest, udc.services.protos.fake.Fake.UpsertFakeStudentResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "UpsertFakeStudent"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentRequest.getDefaultInstance()))
+                  udc.services.protos.fake.Fake.UpsertFakeStudentRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentResponse.getDefaultInstance()))
+                  udc.services.protos.fake.Fake.UpsertFakeStudentResponse.getDefaultInstance()))
               .setSchemaDescriptor(new FakeServiceMethodDescriptorSupplier("UpsertFakeStudent"))
               .build();
         }
@@ -333,7 +333,7 @@ public final class FakeServiceGrpc {
      * </pre>
      */
     default void getAllFakeBaseCenters(com.google.protobuf.Empty request,
-        io.grpc.stub.StreamObserver<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeBaseCentersResponse> responseObserver) {
+        io.grpc.stub.StreamObserver<udc.services.protos.fake.Fake.GetAllFakeBaseCentersResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetAllFakeBaseCentersMethod(), responseObserver);
     }
 
@@ -343,7 +343,7 @@ public final class FakeServiceGrpc {
      * </pre>
      */
     default void getAllFakeStudents(com.google.protobuf.Empty request,
-        io.grpc.stub.StreamObserver<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeStudentsResponse> responseObserver) {
+        io.grpc.stub.StreamObserver<udc.services.protos.fake.Fake.GetAllFakeStudentsResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetAllFakeStudentsMethod(), responseObserver);
     }
 
@@ -352,8 +352,8 @@ public final class FakeServiceGrpc {
      * Retrieves the details of an existing fake student by its identifier document and ID type document. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    default void getFakeStudentByIDDocument(udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentRequest request,
-        io.grpc.stub.StreamObserver<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentResponse> responseObserver) {
+    default void getFakeStudentByIDDocument(udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentRequest request,
+        io.grpc.stub.StreamObserver<udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetFakeStudentByIDDocumentMethod(), responseObserver);
     }
 
@@ -362,8 +362,8 @@ public final class FakeServiceGrpc {
      * Retrieves the details of an existing fake student by its internal identifier. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    default void getFakeStudentByID(udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDRequest request,
-        io.grpc.stub.StreamObserver<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDResponse> responseObserver) {
+    default void getFakeStudentByID(udc.services.protos.fake.Fake.GetFakeStudentByIDRequest request,
+        io.grpc.stub.StreamObserver<udc.services.protos.fake.Fake.GetFakeStudentByIDResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetFakeStudentByIDMethod(), responseObserver);
     }
 
@@ -372,8 +372,8 @@ public final class FakeServiceGrpc {
      * Creates a new fake student. Returns its auto-generated internal identifier if the create succeeded. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    default void createFakeStudent(udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentRequest request,
-        io.grpc.stub.StreamObserver<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentResponse> responseObserver) {
+    default void createFakeStudent(udc.services.protos.fake.Fake.CreateFakeStudentRequest request,
+        io.grpc.stub.StreamObserver<udc.services.protos.fake.Fake.CreateFakeStudentResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getCreateFakeStudentMethod(), responseObserver);
     }
 
@@ -382,7 +382,7 @@ public final class FakeServiceGrpc {
      * Deletes the exisiting fake student specified by its internal identifier. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    default void deleteFakeStudentByID(udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.DeleteFakeStudentByIDRequest request,
+    default void deleteFakeStudentByID(udc.services.protos.fake.Fake.DeleteFakeStudentByIDRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getDeleteFakeStudentByIDMethod(), responseObserver);
     }
@@ -392,7 +392,7 @@ public final class FakeServiceGrpc {
      * Updates the exisiting fake student specified by its internal identifier. All fake student's properties will be changed, setting the passed values. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    default void updateFakeStudent(udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpdateFakeStudentRequest request,
+    default void updateFakeStudent(udc.services.protos.fake.Fake.UpdateFakeStudentRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getUpdateFakeStudentMethod(), responseObserver);
     }
@@ -402,8 +402,8 @@ public final class FakeServiceGrpc {
      * Creates a new fake student or updates the exisiting fake student based on the value of its internal identifier. Returns its auto-generated internal identifier if the upsert succeeded. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    default void upsertFakeStudent(udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentRequest request,
-        io.grpc.stub.StreamObserver<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentResponse> responseObserver) {
+    default void upsertFakeStudent(udc.services.protos.fake.Fake.UpsertFakeStudentRequest request,
+        io.grpc.stub.StreamObserver<udc.services.protos.fake.Fake.UpsertFakeStudentResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getUpsertFakeStudentMethod(), responseObserver);
     }
   }
@@ -457,7 +457,7 @@ public final class FakeServiceGrpc {
      * </pre>
      */
     public void getAllFakeBaseCenters(com.google.protobuf.Empty request,
-        io.grpc.stub.StreamObserver<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeBaseCentersResponse> responseObserver) {
+        io.grpc.stub.StreamObserver<udc.services.protos.fake.Fake.GetAllFakeBaseCentersResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getGetAllFakeBaseCentersMethod(), getCallOptions()), request, responseObserver);
     }
@@ -468,7 +468,7 @@ public final class FakeServiceGrpc {
      * </pre>
      */
     public void getAllFakeStudents(com.google.protobuf.Empty request,
-        io.grpc.stub.StreamObserver<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeStudentsResponse> responseObserver) {
+        io.grpc.stub.StreamObserver<udc.services.protos.fake.Fake.GetAllFakeStudentsResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getGetAllFakeStudentsMethod(), getCallOptions()), request, responseObserver);
     }
@@ -478,8 +478,8 @@ public final class FakeServiceGrpc {
      * Retrieves the details of an existing fake student by its identifier document and ID type document. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    public void getFakeStudentByIDDocument(udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentRequest request,
-        io.grpc.stub.StreamObserver<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentResponse> responseObserver) {
+    public void getFakeStudentByIDDocument(udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentRequest request,
+        io.grpc.stub.StreamObserver<udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getGetFakeStudentByIDDocumentMethod(), getCallOptions()), request, responseObserver);
     }
@@ -489,8 +489,8 @@ public final class FakeServiceGrpc {
      * Retrieves the details of an existing fake student by its internal identifier. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    public void getFakeStudentByID(udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDRequest request,
-        io.grpc.stub.StreamObserver<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDResponse> responseObserver) {
+    public void getFakeStudentByID(udc.services.protos.fake.Fake.GetFakeStudentByIDRequest request,
+        io.grpc.stub.StreamObserver<udc.services.protos.fake.Fake.GetFakeStudentByIDResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getGetFakeStudentByIDMethod(), getCallOptions()), request, responseObserver);
     }
@@ -500,8 +500,8 @@ public final class FakeServiceGrpc {
      * Creates a new fake student. Returns its auto-generated internal identifier if the create succeeded. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    public void createFakeStudent(udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentRequest request,
-        io.grpc.stub.StreamObserver<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentResponse> responseObserver) {
+    public void createFakeStudent(udc.services.protos.fake.Fake.CreateFakeStudentRequest request,
+        io.grpc.stub.StreamObserver<udc.services.protos.fake.Fake.CreateFakeStudentResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getCreateFakeStudentMethod(), getCallOptions()), request, responseObserver);
     }
@@ -511,7 +511,7 @@ public final class FakeServiceGrpc {
      * Deletes the exisiting fake student specified by its internal identifier. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    public void deleteFakeStudentByID(udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.DeleteFakeStudentByIDRequest request,
+    public void deleteFakeStudentByID(udc.services.protos.fake.Fake.DeleteFakeStudentByIDRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getDeleteFakeStudentByIDMethod(), getCallOptions()), request, responseObserver);
@@ -522,7 +522,7 @@ public final class FakeServiceGrpc {
      * Updates the exisiting fake student specified by its internal identifier. All fake student's properties will be changed, setting the passed values. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    public void updateFakeStudent(udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpdateFakeStudentRequest request,
+    public void updateFakeStudent(udc.services.protos.fake.Fake.UpdateFakeStudentRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getUpdateFakeStudentMethod(), getCallOptions()), request, responseObserver);
@@ -533,8 +533,8 @@ public final class FakeServiceGrpc {
      * Creates a new fake student or updates the exisiting fake student based on the value of its internal identifier. Returns its auto-generated internal identifier if the upsert succeeded. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    public void upsertFakeStudent(udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentRequest request,
-        io.grpc.stub.StreamObserver<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentResponse> responseObserver) {
+    public void upsertFakeStudent(udc.services.protos.fake.Fake.UpsertFakeStudentRequest request,
+        io.grpc.stub.StreamObserver<udc.services.protos.fake.Fake.UpsertFakeStudentResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getUpsertFakeStudentMethod(), getCallOptions()), request, responseObserver);
     }
@@ -569,7 +569,7 @@ public final class FakeServiceGrpc {
      * Returns all the fake base centers. &lt;br&gt;_Unsecured endpoint_.
      * </pre>
      */
-    public udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeBaseCentersResponse getAllFakeBaseCenters(com.google.protobuf.Empty request) {
+    public udc.services.protos.fake.Fake.GetAllFakeBaseCentersResponse getAllFakeBaseCenters(com.google.protobuf.Empty request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetAllFakeBaseCentersMethod(), getCallOptions(), request);
     }
@@ -579,7 +579,7 @@ public final class FakeServiceGrpc {
      * Returns all the fake base students. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    public udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeStudentsResponse getAllFakeStudents(com.google.protobuf.Empty request) {
+    public udc.services.protos.fake.Fake.GetAllFakeStudentsResponse getAllFakeStudents(com.google.protobuf.Empty request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetAllFakeStudentsMethod(), getCallOptions(), request);
     }
@@ -589,7 +589,7 @@ public final class FakeServiceGrpc {
      * Retrieves the details of an existing fake student by its identifier document and ID type document. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    public udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentResponse getFakeStudentByIDDocument(udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentRequest request) {
+    public udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentResponse getFakeStudentByIDDocument(udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetFakeStudentByIDDocumentMethod(), getCallOptions(), request);
     }
@@ -599,7 +599,7 @@ public final class FakeServiceGrpc {
      * Retrieves the details of an existing fake student by its internal identifier. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    public udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDResponse getFakeStudentByID(udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDRequest request) {
+    public udc.services.protos.fake.Fake.GetFakeStudentByIDResponse getFakeStudentByID(udc.services.protos.fake.Fake.GetFakeStudentByIDRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetFakeStudentByIDMethod(), getCallOptions(), request);
     }
@@ -609,7 +609,7 @@ public final class FakeServiceGrpc {
      * Creates a new fake student. Returns its auto-generated internal identifier if the create succeeded. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    public udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentResponse createFakeStudent(udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentRequest request) {
+    public udc.services.protos.fake.Fake.CreateFakeStudentResponse createFakeStudent(udc.services.protos.fake.Fake.CreateFakeStudentRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getCreateFakeStudentMethod(), getCallOptions(), request);
     }
@@ -619,7 +619,7 @@ public final class FakeServiceGrpc {
      * Deletes the exisiting fake student specified by its internal identifier. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    public com.google.protobuf.Empty deleteFakeStudentByID(udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.DeleteFakeStudentByIDRequest request) {
+    public com.google.protobuf.Empty deleteFakeStudentByID(udc.services.protos.fake.Fake.DeleteFakeStudentByIDRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getDeleteFakeStudentByIDMethod(), getCallOptions(), request);
     }
@@ -629,7 +629,7 @@ public final class FakeServiceGrpc {
      * Updates the exisiting fake student specified by its internal identifier. All fake student's properties will be changed, setting the passed values. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    public com.google.protobuf.Empty updateFakeStudent(udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpdateFakeStudentRequest request) {
+    public com.google.protobuf.Empty updateFakeStudent(udc.services.protos.fake.Fake.UpdateFakeStudentRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getUpdateFakeStudentMethod(), getCallOptions(), request);
     }
@@ -639,7 +639,7 @@ public final class FakeServiceGrpc {
      * Creates a new fake student or updates the exisiting fake student based on the value of its internal identifier. Returns its auto-generated internal identifier if the upsert succeeded. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    public udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentResponse upsertFakeStudent(udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentRequest request) {
+    public udc.services.protos.fake.Fake.UpsertFakeStudentResponse upsertFakeStudent(udc.services.protos.fake.Fake.UpsertFakeStudentRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getUpsertFakeStudentMethod(), getCallOptions(), request);
     }
@@ -674,7 +674,7 @@ public final class FakeServiceGrpc {
      * Returns all the fake base centers. &lt;br&gt;_Unsecured endpoint_.
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeBaseCentersResponse> getAllFakeBaseCenters(
+    public com.google.common.util.concurrent.ListenableFuture<udc.services.protos.fake.Fake.GetAllFakeBaseCentersResponse> getAllFakeBaseCenters(
         com.google.protobuf.Empty request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getGetAllFakeBaseCentersMethod(), getCallOptions()), request);
@@ -685,7 +685,7 @@ public final class FakeServiceGrpc {
      * Returns all the fake base students. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeStudentsResponse> getAllFakeStudents(
+    public com.google.common.util.concurrent.ListenableFuture<udc.services.protos.fake.Fake.GetAllFakeStudentsResponse> getAllFakeStudents(
         com.google.protobuf.Empty request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getGetAllFakeStudentsMethod(), getCallOptions()), request);
@@ -696,8 +696,8 @@ public final class FakeServiceGrpc {
      * Retrieves the details of an existing fake student by its identifier document and ID type document. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentResponse> getFakeStudentByIDDocument(
-        udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentResponse> getFakeStudentByIDDocument(
+        udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getGetFakeStudentByIDDocumentMethod(), getCallOptions()), request);
     }
@@ -707,8 +707,8 @@ public final class FakeServiceGrpc {
      * Retrieves the details of an existing fake student by its internal identifier. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDResponse> getFakeStudentByID(
-        udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<udc.services.protos.fake.Fake.GetFakeStudentByIDResponse> getFakeStudentByID(
+        udc.services.protos.fake.Fake.GetFakeStudentByIDRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getGetFakeStudentByIDMethod(), getCallOptions()), request);
     }
@@ -718,8 +718,8 @@ public final class FakeServiceGrpc {
      * Creates a new fake student. Returns its auto-generated internal identifier if the create succeeded. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentResponse> createFakeStudent(
-        udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<udc.services.protos.fake.Fake.CreateFakeStudentResponse> createFakeStudent(
+        udc.services.protos.fake.Fake.CreateFakeStudentRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getCreateFakeStudentMethod(), getCallOptions()), request);
     }
@@ -730,7 +730,7 @@ public final class FakeServiceGrpc {
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.protobuf.Empty> deleteFakeStudentByID(
-        udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.DeleteFakeStudentByIDRequest request) {
+        udc.services.protos.fake.Fake.DeleteFakeStudentByIDRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getDeleteFakeStudentByIDMethod(), getCallOptions()), request);
     }
@@ -741,7 +741,7 @@ public final class FakeServiceGrpc {
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.protobuf.Empty> updateFakeStudent(
-        udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpdateFakeStudentRequest request) {
+        udc.services.protos.fake.Fake.UpdateFakeStudentRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getUpdateFakeStudentMethod(), getCallOptions()), request);
     }
@@ -751,8 +751,8 @@ public final class FakeServiceGrpc {
      * Creates a new fake student or updates the exisiting fake student based on the value of its internal identifier. Returns its auto-generated internal identifier if the upsert succeeded. &lt;br&gt;_Secured endpoint_.
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentResponse> upsertFakeStudent(
-        udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<udc.services.protos.fake.Fake.UpsertFakeStudentResponse> upsertFakeStudent(
+        udc.services.protos.fake.Fake.UpsertFakeStudentRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getUpsertFakeStudentMethod(), getCallOptions()), request);
     }
@@ -786,35 +786,35 @@ public final class FakeServiceGrpc {
       switch (methodId) {
         case METHODID_GET_ALL_FAKE_BASE_CENTERS:
           serviceImpl.getAllFakeBaseCenters((com.google.protobuf.Empty) request,
-              (io.grpc.stub.StreamObserver<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeBaseCentersResponse>) responseObserver);
+              (io.grpc.stub.StreamObserver<udc.services.protos.fake.Fake.GetAllFakeBaseCentersResponse>) responseObserver);
           break;
         case METHODID_GET_ALL_FAKE_STUDENTS:
           serviceImpl.getAllFakeStudents((com.google.protobuf.Empty) request,
-              (io.grpc.stub.StreamObserver<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeStudentsResponse>) responseObserver);
+              (io.grpc.stub.StreamObserver<udc.services.protos.fake.Fake.GetAllFakeStudentsResponse>) responseObserver);
           break;
         case METHODID_GET_FAKE_STUDENT_BY_IDDOCUMENT:
-          serviceImpl.getFakeStudentByIDDocument((udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentRequest) request,
-              (io.grpc.stub.StreamObserver<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentResponse>) responseObserver);
+          serviceImpl.getFakeStudentByIDDocument((udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentRequest) request,
+              (io.grpc.stub.StreamObserver<udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentResponse>) responseObserver);
           break;
         case METHODID_GET_FAKE_STUDENT_BY_ID:
-          serviceImpl.getFakeStudentByID((udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDRequest) request,
-              (io.grpc.stub.StreamObserver<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDResponse>) responseObserver);
+          serviceImpl.getFakeStudentByID((udc.services.protos.fake.Fake.GetFakeStudentByIDRequest) request,
+              (io.grpc.stub.StreamObserver<udc.services.protos.fake.Fake.GetFakeStudentByIDResponse>) responseObserver);
           break;
         case METHODID_CREATE_FAKE_STUDENT:
-          serviceImpl.createFakeStudent((udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentRequest) request,
-              (io.grpc.stub.StreamObserver<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentResponse>) responseObserver);
+          serviceImpl.createFakeStudent((udc.services.protos.fake.Fake.CreateFakeStudentRequest) request,
+              (io.grpc.stub.StreamObserver<udc.services.protos.fake.Fake.CreateFakeStudentResponse>) responseObserver);
           break;
         case METHODID_DELETE_FAKE_STUDENT_BY_ID:
-          serviceImpl.deleteFakeStudentByID((udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.DeleteFakeStudentByIDRequest) request,
+          serviceImpl.deleteFakeStudentByID((udc.services.protos.fake.Fake.DeleteFakeStudentByIDRequest) request,
               (io.grpc.stub.StreamObserver<com.google.protobuf.Empty>) responseObserver);
           break;
         case METHODID_UPDATE_FAKE_STUDENT:
-          serviceImpl.updateFakeStudent((udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpdateFakeStudentRequest) request,
+          serviceImpl.updateFakeStudent((udc.services.protos.fake.Fake.UpdateFakeStudentRequest) request,
               (io.grpc.stub.StreamObserver<com.google.protobuf.Empty>) responseObserver);
           break;
         case METHODID_UPSERT_FAKE_STUDENT:
-          serviceImpl.upsertFakeStudent((udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentRequest) request,
-              (io.grpc.stub.StreamObserver<udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentResponse>) responseObserver);
+          serviceImpl.upsertFakeStudent((udc.services.protos.fake.Fake.UpsertFakeStudentRequest) request,
+              (io.grpc.stub.StreamObserver<udc.services.protos.fake.Fake.UpsertFakeStudentResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -839,56 +839,56 @@ public final class FakeServiceGrpc {
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
               com.google.protobuf.Empty,
-              udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeBaseCentersResponse>(
+              udc.services.protos.fake.Fake.GetAllFakeBaseCentersResponse>(
                 service, METHODID_GET_ALL_FAKE_BASE_CENTERS)))
         .addMethod(
           getGetAllFakeStudentsMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
               com.google.protobuf.Empty,
-              udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeStudentsResponse>(
+              udc.services.protos.fake.Fake.GetAllFakeStudentsResponse>(
                 service, METHODID_GET_ALL_FAKE_STUDENTS)))
         .addMethod(
           getGetFakeStudentByIDDocumentMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
-              udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentRequest,
-              udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDDocumentResponse>(
+              udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentRequest,
+              udc.services.protos.fake.Fake.GetFakeStudentByIDDocumentResponse>(
                 service, METHODID_GET_FAKE_STUDENT_BY_IDDOCUMENT)))
         .addMethod(
           getGetFakeStudentByIDMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
-              udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDRequest,
-              udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDResponse>(
+              udc.services.protos.fake.Fake.GetFakeStudentByIDRequest,
+              udc.services.protos.fake.Fake.GetFakeStudentByIDResponse>(
                 service, METHODID_GET_FAKE_STUDENT_BY_ID)))
         .addMethod(
           getCreateFakeStudentMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
-              udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentRequest,
-              udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentResponse>(
+              udc.services.protos.fake.Fake.CreateFakeStudentRequest,
+              udc.services.protos.fake.Fake.CreateFakeStudentResponse>(
                 service, METHODID_CREATE_FAKE_STUDENT)))
         .addMethod(
           getDeleteFakeStudentByIDMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
-              udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.DeleteFakeStudentByIDRequest,
+              udc.services.protos.fake.Fake.DeleteFakeStudentByIDRequest,
               com.google.protobuf.Empty>(
                 service, METHODID_DELETE_FAKE_STUDENT_BY_ID)))
         .addMethod(
           getUpdateFakeStudentMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
-              udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpdateFakeStudentRequest,
+              udc.services.protos.fake.Fake.UpdateFakeStudentRequest,
               com.google.protobuf.Empty>(
                 service, METHODID_UPDATE_FAKE_STUDENT)))
         .addMethod(
           getUpsertFakeStudentMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
-              udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentRequest,
-              udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.UpsertFakeStudentResponse>(
+              udc.services.protos.fake.Fake.UpsertFakeStudentRequest,
+              udc.services.protos.fake.Fake.UpsertFakeStudentResponse>(
                 service, METHODID_UPSERT_FAKE_STUDENT)))
         .build();
   }
@@ -899,7 +899,7 @@ public final class FakeServiceGrpc {
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.getDescriptor();
+      return udc.services.protos.fake.Fake.getDescriptor();
     }
 
     @java.lang.Override

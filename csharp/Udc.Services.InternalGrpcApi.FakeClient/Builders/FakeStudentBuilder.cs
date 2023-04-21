@@ -8,18 +8,20 @@ public class FakeStudentBuilder
     private FakeStudent _fakeStudent;
 
     public string TestId => "10000";
-    public string TestIDDocumentNumber => "10000";
-    public FakeIDDocumentType TestFakeIDDocumentType => FakeIDDocumentType.Nif;
+    public FakeIDDocument FakeTestIDDocument => new() { Number = "36991036K", Type = FakeIDDocumentType.Nif };
     public string TestFirstName => "José Filogonio";
     public string TestSurname => "Juez";
     public string TestSecondSurname => "Bañuelos";
     public string? TestUsername => "filogonio.juez";
 
+    public FakeIDDocument TestNotExistingFakeIDDocument => new() { Number = "00010001A", Type = FakeIDDocumentType.Nif };
+    public FakeIDDocument TestInvalidFakeIDDocument => new() { Number = "0001$001A", Type = FakeIDDocumentType.Nif };
+    public FakeIDDocument TestEmptyFakeIDDocumentNumber => new() { Number = " ", Type = FakeIDDocumentType.Nif };
+    public FakeIDDocument TestEmptyFakeIDDocumentType => new() { Number = "36991036K", Type = FakeIDDocumentType.Unspecified };
+
     public const string TestEmptyString = " ";
     public const string TestNotExistingId = "00000";
-    public const string TestNotExistingIDDocument = "00010001A";
     public const string TestInvalidId = "00$11";
-    public const string TestInvalidIDDocument = "0001$001A";
     public const string TestInvalidFirstname = "Filo-gonio";
     public const string TestInvalidSurname = "Ju-ez";
     public const string TestInvalidSecondSurname = "Bañu-elos";
@@ -45,8 +47,7 @@ public class FakeStudentBuilder
                 {
                     Id = TestId
                 },
-                IdDocumentNumber = TestIDDocumentNumber,
-                FakeIdDocumentType = TestFakeIDDocumentType,
+                FakeIdDocument = FakeTestIDDocument,
                 FirstName = TestFirstName,
                 Surname = TestSurname,
                 SecondSurname = TestSecondSurname,
@@ -73,8 +74,7 @@ public class FakeStudentBuilder
                 {
                     Id = null
                 },
-                IdDocumentNumber = randomIDDocumentNumber,
-                FakeIdDocumentType = FakeIDDocumentType.Nif,
+                FakeIdDocument = new() { Number = randomIDDocumentNumber, Type = FakeIDDocumentType.Nif },
                 FirstName = randomFirstName,
                 Surname = randomSurname,
                 SecondSurname = randomSecondSurname,

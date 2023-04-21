@@ -25,10 +25,10 @@ public class GetAllFakeBaseCenters : BaseTest, IDisposable
     [Fact]
     public async Task GetsAllFakeBaseCenters_From_InternalFakeGrpcService_Async()
     {
-        var fakeBaseCentersFromService = await _client.GetAllFakeBaseCentersAsync(new Empty(), deadline: DateTime.UtcNow.AddMinutes(1));
+        var fakeBaseCentersResponseFromService = await _client.GetAllFakeBaseCentersAsync(new Empty(), deadline: DateTime.UtcNow.AddMinutes(1));
 
         var expectedFakeBaseCenter = FakeCenterBuilder.WithDefaultValues();
-        Assert.Contains<FakeBaseCenter>(expectedFakeBaseCenter, fakeBaseCentersFromService.FakeBaseCenters_);
+        Assert.Contains<FakeBaseCenter>(expectedFakeBaseCenter, fakeBaseCentersResponseFromService.FakeBaseCenters);
     }
 
     public void Dispose()

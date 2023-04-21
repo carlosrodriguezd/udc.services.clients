@@ -6,6 +6,7 @@ import udc.services.internalgrpcapi.fakeclient.helpers.RandomHelpers;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeBaseCenter;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeBaseEntity;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeBasePerson;
+import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeIDDocument;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeIDDocumentType;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeStudent;
 
@@ -14,23 +15,26 @@ public class FakeStudentBuilder {
     private FakeStudent _fakeStudent;
 
     public static final String TEST_ID = "10000";
-    public static final String TEST_ID_DOCUMENT_NUMBER = "10000";
-    public FakeIDDocumentType TEST_FAKE_ID_DOCUMENT_TYPE = FakeIDDocumentType.FAKE_ID_DOCUMENT_TYPE_NIF;
+    public static final FakeIDDocument FAKE_TEST_ID_DOCUMENT = FakeIDDocument.newBuilder().setNumber("36991036K").setType(FakeIDDocumentType.FAKE_ID_DOCUMENT_TYPE_NIF).build();
+      
     public static final String TEST_FIRST_NAME = "José Filogonio";
     public static final String TEST_SURNAME = "Juez";
     public static final String TEST_SECOND_SURNAME = "Bañuelos";
     public static final String TEST_USERNAME = "filogonio.juez";
 
+    public static final FakeIDDocument TEST_NOT_EXISTING_FAKE_ID_DOCUMENT = FakeIDDocument.newBuilder().setNumber("00010001A").setType(FakeIDDocumentType.FAKE_ID_DOCUMENT_TYPE_NIF).build();
+    public static final FakeIDDocument TEST_NOT_EXISTING_ID_DOCUMENT = FakeIDDocument.newBuilder().setNumber("0001$001A").setType(FakeIDDocumentType.FAKE_ID_DOCUMENT_TYPE_NIF).build();
+    public static final FakeIDDocument TEST_EMPTY_FAKE_ID_DOCUMENT_NUMBER = FakeIDDocument.newBuilder().setNumber(" ").setType(FakeIDDocumentType.FAKE_ID_DOCUMENT_TYPE_NIF).build();
+    public static final FakeIDDocument TEST_EMPTY_FAKE_ID_DOCUMENT_TYPE = FakeIDDocument.newBuilder().setNumber("36991036K").setType(FakeIDDocumentType.FAKE_ID_DOCUMENT_TYPE_UNSPECIFIED).build();
+    
     public static final String TEST_EMPTY_STRING = " ";
     public static final String TEST_NOT_EXISTING_ID = "00000";
-    public static final String TEST_NOT_EXISTING_ID_DOCUMENT = "00010001A";
     public static final String TEST_INVALID_ID = "00$11";
-    public static final String TEST_INVALID_ID_DOCUMENT = "0001$001A";
     public static final String TEST_INVALID_FIRSTNAME = "Filo-gonio";
     public static final String TEST_INVALID_SURNAME = "Ju-ez";
     public static final String TEST_INVALID_SECOND_SURNAME = "Bañu-elos";
     public static final String TEST_INVALID_USERNAME = "filo-gonio.juez";	
-	
+	   
     public FakeStudentBuilder()
     {
         _fakeStudent = withDefaultValues();
@@ -50,8 +54,7 @@ public class FakeStudentBuilder {
        	FakeBasePerson fakeBasePerson = FakeBasePerson
     			.newBuilder()
     			.setFakeBaseEntity(fakeBaseEntity)
-    			.setIdDocumentNumber(TEST_ID_DOCUMENT_NUMBER)
-    			.setFakeIdDocumentType(TEST_FAKE_ID_DOCUMENT_TYPE)
+    			.setFakeIdDocument(FAKE_TEST_ID_DOCUMENT)
     			.setFirstName(TEST_FIRST_NAME)
     			.setSurname(TEST_SURNAME)
     			.setSecondSurname(StringValue.newBuilder().setValue(TEST_SECOND_SURNAME))
@@ -79,8 +82,7 @@ public class FakeStudentBuilder {
        	FakeBasePerson fakeBasePerson = FakeBasePerson
     			.newBuilder()
     			.setFakeBaseEntity(fakeBaseEntity)
-    			.setIdDocumentNumber(randomIDDocumentNumber)
-    			.setFakeIdDocumentType(FakeIDDocumentType.FAKE_ID_DOCUMENT_TYPE_NIF)
+    			.setFakeIdDocument(FAKE_TEST_ID_DOCUMENT)
     			.setFirstName(randomFirstName)
     			.setSurname(randomSurname)
     			.setSecondSurname(StringValue.newBuilder().setValue(randomSecondSurname).build())
@@ -108,8 +110,7 @@ public class FakeStudentBuilder {
        	FakeBasePerson fakeBasePerson = FakeBasePerson
     			.newBuilder()
     			.setFakeBaseEntity(fakeBaseEntity)
-    			.setIdDocumentNumber(TEST_EMPTY_STRING)
-    			.setFakeIdDocumentType(FakeIDDocumentType.FAKE_ID_DOCUMENT_TYPE_NIF)
+    			.setFakeIdDocument(TEST_EMPTY_FAKE_ID_DOCUMENT_NUMBER)
     			.setFirstName(randomFirstName)
     			.setSurname(randomSurname)
     			.setSecondSurname(StringValue.newBuilder().setValue(randomSecondSurname).build())
@@ -133,8 +134,7 @@ public class FakeStudentBuilder {
        	FakeBasePerson fakeBasePerson = FakeBasePerson
     			.newBuilder()
     			.setFakeBaseEntity(fakeBaseEntity)
-    			.setIdDocumentNumber(fakeStudent.getFakeBasePerson().getIdDocumentNumber())
-    			.setFakeIdDocumentType(fakeStudent.getFakeBasePerson().getFakeIdDocumentType())
+    			.setFakeIdDocument(FAKE_TEST_ID_DOCUMENT)
     			.setFirstName(fakeStudent.getFakeBasePerson().getFirstName())
     			.setSurname(fakeStudent.getFakeBasePerson().getSurname())
     			.setSecondSurname(fakeStudent.getFakeBasePerson().getSecondSurname())
@@ -161,8 +161,7 @@ public class FakeStudentBuilder {
        	FakeBasePerson fakeBasePerson = FakeBasePerson
     			.newBuilder()
     			.setFakeBaseEntity(fakeBaseEntity)
-    			.setIdDocumentNumber(idDocumentNumber)
-    			.setFakeIdDocumentType(fakeIDDocumentType)
+    			.setFakeIdDocument(FakeIDDocument.newBuilder().setNumber(idDocumentNumber).setType(fakeIDDocumentType).build())
     			.setFirstName(fakeStudent.getFakeBasePerson().getFirstName())
     			.setSurname(fakeStudent.getFakeBasePerson().getSurname())
     			.setSecondSurname(fakeStudent.getFakeBasePerson().getSecondSurname())

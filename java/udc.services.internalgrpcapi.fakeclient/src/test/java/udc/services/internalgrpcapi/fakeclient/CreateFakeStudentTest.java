@@ -47,15 +47,16 @@ import io.grpc.netty.shaded.io.netty.handler.ssl.util.InsecureTrustManagerFactor
 import udc.services.internalgrpcapi.fakeclient.builders.FakeStudentBuilder;
 import udc.services.internalgrpcapi.fakeclient.helpers.ServiceHelpers;
 import udc.services.internalgrpcapi.fakeclient.oauth.BearerToken;
+import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentRequest;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentResponse;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.DeleteFakeStudentByIDRequest;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeStudent;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDRequest;
+import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDResponse;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.FakeServiceGrpc;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.FakeServiceGrpc.FakeServiceBlockingStub;
 import udc.services.internalgrpcapi.fakeclient.trailers.ResourceDuplicateTrailer;
 import udc.services.internalgrpcapi.fakeclient.trailers.ValidationTrailer;
-
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class CreateFakeStudentTest extends BaseTest {
@@ -70,7 +71,7 @@ class CreateFakeStudentTest extends BaseTest {
     @BeforeAll
     public void init() throws Exception {
     	
-    	callCredentials = new BearerToken(ServiceHelpers.getBearerToken(oAuthServerUrl, clientId, clientSecret));
+    	callCredentials = new BearerToken(ServiceHelpers.getBearerToken(oAuthAccessTokenEndpoint, clientId, clientSecret));
         SslContext sslContext = SslContextBuilder.forClient()
         		.sslProvider(SslProvider.OPENSSL)
         		.protocols(TLS_PROTOCOL)
@@ -87,55 +88,57 @@ class CreateFakeStudentTest extends BaseTest {
 	void createsNewFakeStudent_ThroughTo_InternalFakeGrpcService() {
 		
 		FakeStudent newFakeStudent = fakeStudentBuilder.withRandomValuesAndNif();
-		CreateFakeStudentResponse newFakeStudentIdResponse = blockingStub.withCallCredentials(callCredentials).createFakeStudent(newFakeStudent);
+        CreateFakeStudentRequest newFakeStudentRequest = CreateFakeStudentRequest.newBuilder().setFakeStudent(newFakeStudent).build();
+		CreateFakeStudentResponse newFakeStudentIdResponse = blockingStub.withCallCredentials(callCredentials).createFakeStudent(newFakeStudentRequest);
 		newFakeStudent = fakeStudentBuilder.withNewID(newFakeStudent, newFakeStudentIdResponse.getId());
 		
 		GetFakeStudentByIDRequest getNewFakeStudentIDrequest = GetFakeStudentByIDRequest.newBuilder().setId(newFakeStudentIdResponse.getId()).build();
-		FakeStudent newFakeStudentFromService = blockingStub.withCallCredentials(callCredentials).getFakeStudentByID(getNewFakeStudentIDrequest);		
-		assertEquals(newFakeStudent, newFakeStudentFromService);
+		GetFakeStudentByIDResponse newFakeStudentResponseFromService = blockingStub.withCallCredentials(callCredentials).getFakeStudentByID(getNewFakeStudentIDrequest);		
+		assertEquals(newFakeStudent, newFakeStudentResponseFromService.getFakeStudent());
 		
 		DeleteFakeStudentByIDRequest deleteRequest = DeleteFakeStudentByIDRequest.newBuilder().setId(newFakeStudent.getFakeBasePerson().getFakeBaseEntity().getId().getValue()).build();
 		blockingStub.withCallCredentials(callCredentials).deleteFakeStudentByID(deleteRequest);
 	}
-    
+	
 	@Test
 	void cantCreateDuplicateFakeStudentByIDDocument_ThroughTo_InternalFakeGrpcService() throws JsonMappingException, JsonProcessingException {
 	
 	    FakeStudent newFakeStudent = fakeStudentBuilder.withRandomValuesAndNif();
-		CreateFakeStudentResponse newFakeStudentIdResponse = blockingStub.withCallCredentials(callCredentials).createFakeStudent(newFakeStudent);
+        CreateFakeStudentRequest newFakeStudentRequest = CreateFakeStudentRequest.newBuilder().setFakeStudent(newFakeStudent).build();
+		CreateFakeStudentResponse newFakeStudentIdResponse = blockingStub.withCallCredentials(callCredentials).createFakeStudent(newFakeStudentRequest);
 
 		StatusRuntimeException ex = assertThrows(StatusRuntimeException.class, () -> {
     		FakeStudent newDuplicateFakeStudentByIDDocument = fakeStudentBuilder.withRandomValuesAndNif();
     	    newDuplicateFakeStudentByIDDocument = fakeStudentBuilder.withNewIDDocumentNumber(
-    				newDuplicateFakeStudentByIDDocument, newFakeStudent.getFakeBasePerson().getIdDocumentNumber(), newFakeStudent.getFakeBasePerson().getFakeIdDocumentType());
-        	blockingStub.withCallCredentials(callCredentials).createFakeStudent(newDuplicateFakeStudentByIDDocument);
+    				newDuplicateFakeStudentByIDDocument, newFakeStudent.getFakeBasePerson().getFakeIdDocument().getNumber(), newFakeStudent.getFakeBasePerson().getFakeIdDocument().getType());
+            CreateFakeStudentRequest newDuplicateFakeStudentByIDDocumentRequest = CreateFakeStudentRequest.newBuilder().setFakeStudent(newDuplicateFakeStudentByIDDocument).build();
+        	blockingStub.withCallCredentials(callCredentials).createFakeStudent(newDuplicateFakeStudentByIDDocumentRequest);
     	});
 		
 	    List<ResourceDuplicateTrailer> errors  = ServiceHelpers.getResourceDuplicateErrors(ex);
 	    assertEquals(Status.ALREADY_EXISTS.getCode(), ex.getStatus().getCode());
         assertTrue(errors.size() > 0);
         assertEquals(newFakeStudent.getClass().getSimpleName(), errors.get(0).getResource());
-        assertTrue(errors.get(0).getProperties().containsKey("IDDocumentNumber"));
-        assertTrue(errors.get(0).getProperties().containsKey("FakeIDDocumentType"));
+        assertTrue(errors.get(0).getProperties().containsKey("FakeIDDocument"));
         
 		DeleteFakeStudentByIDRequest deleteRequest = DeleteFakeStudentByIDRequest.newBuilder().setId(newFakeStudentIdResponse.getId()).build();
 		blockingStub.withCallCredentials(callCredentials).deleteFakeStudentByID(deleteRequest);
 	}
-	
+
 	@Test
 	void cantValidateEmptyIDDocument_In_CreateFakeStudent_From_InternalFakeGrpcService() throws JsonMappingException, JsonProcessingException {
 	    
-		FakeStudent newFakeStudent = fakeStudentBuilder.withRandomValuesAndNif();
-		CreateFakeStudentResponse newFakeStudentIdResponse = blockingStub.withCallCredentials(callCredentials).createFakeStudent(newFakeStudent);
+		FakeStudent newFakeStudent = fakeStudentBuilder.withRandomValuesAndEmptyIDDocumentNumber();
+        CreateFakeStudentRequest newFakeStudentRequest = CreateFakeStudentRequest.newBuilder().setFakeStudent(newFakeStudent).build();
 
 		StatusRuntimeException ex = assertThrows(StatusRuntimeException.class, () -> {
-        	blockingStub.withCallCredentials(callCredentials).createFakeStudent(fakeStudentBuilder.withRandomValuesAndEmptyIDDocumentNumber());
+        	blockingStub.withCallCredentials(callCredentials).createFakeStudent(newFakeStudentRequest);
     	});
 		
 		List<ValidationTrailer> errors  = ServiceHelpers.getValidationErrors(ex);
 	    assertEquals(Status.INVALID_ARGUMENT.getCode(), ex.getStatus().getCode());
 		assertTrue(errors.size() > 0);
-	    String expectedPropertyName = String.format("%s.%s", newFakeStudent.getFakeBasePerson().getClass().getSimpleName(), "IDDocumentNumber");
+	    String expectedPropertyName = String.format("%s.%s.%s.%s", newFakeStudent.getClass().getSimpleName(), newFakeStudent.getFakeBasePerson().getClass().getSimpleName(), newFakeStudent.getFakeBasePerson().getFakeIdDocument().getClass().getSimpleName(), "Number");
 	    assertEquals(expectedPropertyName.toLowerCase(), errors.get(0).getPropertyName().toLowerCase());
 	}
 	

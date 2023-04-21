@@ -59,9 +59,9 @@ public class ResourceDuplicateTrailer
 {
     public string? Resource { get; }
     public string ErrorMessage { get; }
-    public Dictionary<string, string> Properties { get; } = new Dictionary<string, string>();
+    public Dictionary<string, string?> Properties { get; } = new Dictionary<string, string?>();
 
-    public ResourceDuplicateTrailer(string? resource, string errorMessage, Dictionary<string, string> properties)
+    public ResourceDuplicateTrailer(string? resource, string errorMessage, Dictionary<string, string?> properties)
     {
         Resource = resource;
         ErrorMessage = errorMessage;

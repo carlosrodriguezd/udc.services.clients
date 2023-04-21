@@ -32,7 +32,13 @@ public class ServiceHelpers {
     
 	private static String strPattern = "access_token=([a-z0-9\\-]*)\\&.*";
 	
-	public static String getBearerToken(String oAuthServer, String clientId, String clientSecret) throws Exception {
+	public static String getBearerToken(String accessTokenoAuthServerEndpoint, String clientId, String clientSecret) throws Exception {
+		
+		String accessTokenEndpoint = accessTokenoAuthServerEndpoint;
+        if (accessTokenoAuthServerEndpoint.charAt(accessTokenoAuthServerEndpoint.length() - 1) == '/')
+        {
+        	accessTokenEndpoint = accessTokenoAuthServerEndpoint.substring(0, accessTokenoAuthServerEndpoint.length() - 1);
+        }
 		
 		String token = null;
 		
@@ -40,7 +46,7 @@ public class ServiceHelpers {
 			HttpClient client = HttpClient.newHttpClient();
 			HttpRequest request = HttpRequest.newBuilder()
 					  .GET()
-					  .uri(new URI(String.format("%saccessToken?grant_type=client_credentials&client_id=%s&client_secret=%s", oAuthServer, clientId, clientSecret)))
+					  .uri(new URI(String.format("%s?grant_type=client_credentials&client_id=%s&client_secret=%s", accessTokenEndpoint, clientId, clientSecret)))
 					  .build();
 			
 			HttpResponse<String> response = client.send(request, BodyHandlers.ofString());

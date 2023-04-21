@@ -9,7 +9,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         var oauthSettings = GetOAuthSettings();
-        services.AddScoped<ITokenProvider, AppTokenProvider>(provider => new AppTokenProvider(oauthSettings.AccessTokenEndpoint, oauthSettings.TestClient.Id, oauthSettings.TestClient.Secret));
+        services.AddScoped<ITokenProvider, AppTokenProvider>(provider => new AppTokenProvider(oauthSettings.AccessTokenEndpoint, oauthSettings.FakeClient.Id, oauthSettings.FakeClient.Secret));
     }
 
     public static AppSettings GetAppSettings()

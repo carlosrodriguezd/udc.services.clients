@@ -17,7 +17,6 @@ public class DeleteFakeStudentByID : BaseTest, IDisposable
     private readonly ITestOutputHelper _output;
     private FakeStudentBuilder FakeStudentBuilder { get; } = new();
 
-
     public DeleteFakeStudentByID(ITestOutputHelper output, ITokenProvider tokenProvider)
     {
         _output = output;
@@ -29,7 +28,8 @@ public class DeleteFakeStudentByID : BaseTest, IDisposable
     public async Task DeletesExistingFakeStudentById_ThroughTo_InternalFakeGrpcService_Async()
     {
         var newFakeStudent = FakeStudentBuilder.WithRandomValuesAndNif();
-        var newFakeStudentIdResponse = await _client.CreateFakeStudentAsync(newFakeStudent, deadline: DateTime.UtcNow.AddMinutes(1));
+        CreateFakeStudentRequest newFakeStudentRequest = new() { FakeStudent = newFakeStudent };
+        var newFakeStudentIdResponse = await _client.CreateFakeStudentAsync(newFakeStudentRequest, deadline: DateTime.UtcNow.AddMinutes(1));
         newFakeStudent.FakeBasePerson.FakeBaseEntity.Id = newFakeStudentIdResponse.Id;
         _output.WriteLine($"NewFakeStudentId: {newFakeStudent.FakeBasePerson.FakeBaseEntity.Id}");
 

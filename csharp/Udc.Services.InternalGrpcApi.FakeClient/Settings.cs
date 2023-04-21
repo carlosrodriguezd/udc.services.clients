@@ -10,7 +10,7 @@ public class OAuthSettings
 {
     public string Server { get; set; } = string.Empty;
     public string AccessTokenEndpoint { get; set; } = string.Empty;
-    public Client TestClient { get; set; } = new();
+    public Client FakeClient { get; set; } = new();
 
     public class Client
     {

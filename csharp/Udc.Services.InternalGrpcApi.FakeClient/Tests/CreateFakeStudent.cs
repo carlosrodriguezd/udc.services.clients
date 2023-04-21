@@ -28,12 +28,13 @@ public class CreateFakeStudent : BaseTest, IDisposable
     public async Task CreatesNewFakeStudent_ThroughTo_InternalFakeGrpcService_Async()
     {
         var newFakeStudent = FakeStudentBuilder.WithRandomValuesAndNif();
-        var newFakeStudentIdResponse = await _client.CreateFakeStudentAsync(newFakeStudent, deadline: DateTime.UtcNow.AddMinutes(1));
+        CreateFakeStudentRequest newFakeStudentRequest = new() { FakeStudent = newFakeStudent };
+        var newFakeStudentIdResponse = await _client.CreateFakeStudentAsync(newFakeStudentRequest, deadline: DateTime.UtcNow.AddMinutes(1));
         newFakeStudent.FakeBasePerson.FakeBaseEntity.Id = newFakeStudentIdResponse.Id;
 
         GetFakeStudentByIDRequest getNewFakeStudentIDrequest = new() { Id = newFakeStudentIdResponse.Id };
-        var newFakeStudentFromService = await _client.GetFakeStudentByIDAsync(getNewFakeStudentIDrequest, deadline: DateTime.UtcNow.AddMinutes(1));
-        Assert.Equal<FakeStudent>(newFakeStudent, newFakeStudentFromService);
+        var newFakeStudentResponseFromService = await _client.GetFakeStudentByIDAsync(getNewFakeStudentIDrequest, deadline: DateTime.UtcNow.AddMinutes(1));
+        Assert.Equal<FakeStudent>(newFakeStudent, newFakeStudentResponseFromService.FakeStudent);
 
         DeleteFakeStudentByIDRequest deleteRequest = new() { Id = newFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
         await _client.DeleteFakeStudentByIDAsync(deleteRequest, deadline: DateTime.UtcNow.AddMinutes(1));
@@ -43,20 +44,20 @@ public class CreateFakeStudent : BaseTest, IDisposable
     public async Task CantCreateDuplicateFakeStudentByIDDocument_ThroughTo_InternalFakeGrpcService_Async()
     {
         var newFakeStudent = FakeStudentBuilder.WithRandomValuesAndNif();
-        var newFakeStudentIdResponse = await _client.CreateFakeStudentAsync(newFakeStudent, deadline: DateTime.UtcNow.AddMinutes(1));
+        CreateFakeStudentRequest newFakeStudentRequest = new() { FakeStudent = newFakeStudent };
+        var newFakeStudentIdResponse = await _client.CreateFakeStudentAsync(newFakeStudentRequest, deadline: DateTime.UtcNow.AddMinutes(1));
         newFakeStudent.FakeBasePerson.FakeBaseEntity.Id = newFakeStudentIdResponse.Id;
         var newDuplicateFakeStudentByIDDocument = FakeStudentBuilder.WithRandomValuesAndNif();
-        newDuplicateFakeStudentByIDDocument.FakeBasePerson.IdDocumentNumber = newFakeStudent.FakeBasePerson.IdDocumentNumber;
-        newDuplicateFakeStudentByIDDocument.FakeBasePerson.FakeIdDocumentType = newFakeStudent.FakeBasePerson.FakeIdDocumentType;
+        newDuplicateFakeStudentByIDDocument.FakeBasePerson.FakeIdDocument = newFakeStudent.FakeBasePerson.FakeIdDocument;
 
-        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newDuplicateFakeStudentByIDDocument, deadline: DateTime.UtcNow.AddMinutes(1)));
+        CreateFakeStudentRequest newDuplicateFakeStudentByIDDocumentRequest = new() { FakeStudent = newDuplicateFakeStudentByIDDocument };
+        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newDuplicateFakeStudentByIDDocumentRequest, deadline: DateTime.UtcNow.AddMinutes(1)));
 
         var errors = ex.GetResourceDuplicateErrors();
         Assert.Equal(StatusCode.AlreadyExists, ex.StatusCode);
         Assert.NotEmpty(errors);
         Assert.All<ResourceDuplicateTrailer>(errors, error => Assert.Equal(newDuplicateFakeStudentByIDDocument.GetType().Name, error.Resource, ignoreCase: true));
-        Assert.Single(errors.First().Properties.Keys.Where(k => k.Equals(nameof(newDuplicateFakeStudentByIDDocument.FakeBasePerson.IdDocumentNumber), StringComparison.OrdinalIgnoreCase)));
-        Assert.Single(errors.First().Properties.Keys.Where(k => k.Equals(nameof(newDuplicateFakeStudentByIDDocument.FakeBasePerson.FakeIdDocumentType), StringComparison.OrdinalIgnoreCase)));
+        Assert.Single(errors.First().Properties.Keys.Where(k => k.Equals(nameof(newDuplicateFakeStudentByIDDocument.FakeBasePerson.FakeIdDocument), StringComparison.OrdinalIgnoreCase)));
 
         DeleteFakeStudentByIDRequest deleteRequest = new() { Id = newFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
         await _client.DeleteFakeStudentByIDAsync(deleteRequest, deadline: DateTime.UtcNow.AddMinutes(1));
@@ -66,13 +67,15 @@ public class CreateFakeStudent : BaseTest, IDisposable
     public async Task CantCreateDuplicateFakeStudentByUsername_ThroughTo_InternalFakeGrpcService_Async()
     {
         var newFakeStudent = FakeStudentBuilder.WithRandomValuesAndNif();
-        var newFakeStudentIdResponse = await _client.CreateFakeStudentAsync(newFakeStudent, deadline: DateTime.UtcNow.AddMinutes(1));
+        CreateFakeStudentRequest newFakeStudentRequest = new() { FakeStudent = newFakeStudent };
+        var newFakeStudentIdResponse = await _client.CreateFakeStudentAsync(newFakeStudentRequest, deadline: DateTime.UtcNow.AddMinutes(1));
         newFakeStudent.FakeBasePerson.FakeBaseEntity.Id = newFakeStudentIdResponse.Id;
 
         var newDuplicateFakeStudentByUsername = FakeStudentBuilder.WithRandomValuesAndNif();
         newDuplicateFakeStudentByUsername.Username = newFakeStudent.Username;
 
-        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newDuplicateFakeStudentByUsername, deadline: DateTime.UtcNow.AddMinutes(1)));
+        CreateFakeStudentRequest newDuplicateFakeStudentByUsernameRequest = new() { FakeStudent = newDuplicateFakeStudentByUsername };
+        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newDuplicateFakeStudentByUsernameRequest, deadline: DateTime.UtcNow.AddMinutes(1)));
 
         var errors = ex.GetResourceDuplicateErrors();
         Assert.Equal(StatusCode.AlreadyExists, ex.StatusCode);
@@ -88,14 +91,15 @@ public class CreateFakeStudent : BaseTest, IDisposable
     public async Task CantValidateEmptyIDDocument_In_CreateFakeStudent_From_InternalFakeGrpcService_Async()
     {
         var newFakeStudent = FakeStudentBuilder.WithRandomValuesAndNif();
-        newFakeStudent.FakeBasePerson.IdDocumentNumber = FakeStudentBuilder.TestEmptyString;
+        newFakeStudent.FakeBasePerson.FakeIdDocument = FakeStudentBuilder.TestEmptyFakeIDDocumentNumber;
 
-        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newFakeStudent, deadline: DateTime.UtcNow.AddMinutes(1)));
+        CreateFakeStudentRequest newFakeStudentRequest = new() { FakeStudent = newFakeStudent };
+        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newFakeStudentRequest, deadline: DateTime.UtcNow.AddMinutes(1)));
 
         var errors = ex.GetValidationErrors();
         Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
         Assert.NotEmpty(errors);
-        var expectedPropertyName = $"{newFakeStudent.FakeBasePerson.GetType().Name}.{nameof(newFakeStudent.FakeBasePerson.IdDocumentNumber)}";
+        var expectedPropertyName = $"{newFakeStudent.GetType().Name}.{newFakeStudent.FakeBasePerson.GetType().Name}.{newFakeStudent.FakeBasePerson.FakeIdDocument.GetType().Name}.{nameof(newFakeStudent.FakeBasePerson.FakeIdDocument.Number)}";
         Assert.All<ValidationTrailer>(errors, error => Assert.Equal(expectedPropertyName, error.PropertyName, ignoreCase: true));
     }
 
@@ -103,14 +107,15 @@ public class CreateFakeStudent : BaseTest, IDisposable
     public async Task CantValidateInvalidIDDocument_In_CreateFakeStudent_From_InternalFakeGrpcService_Async()
     {
         var newFakeStudent = FakeStudentBuilder.WithRandomValuesAndNif();
-        newFakeStudent.FakeBasePerson.IdDocumentNumber = FakeStudentBuilder.TestInvalidIDDocument;
+        newFakeStudent.FakeBasePerson.FakeIdDocument = FakeStudentBuilder.TestInvalidFakeIDDocument;
 
-        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newFakeStudent, deadline: DateTime.UtcNow.AddMinutes(1)));
+        CreateFakeStudentRequest newFakeStudentRequest = new() { FakeStudent = newFakeStudent };
+        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newFakeStudentRequest, deadline: DateTime.UtcNow.AddMinutes(1)));
 
         var errors = ex.GetValidationErrors();
         Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
         Assert.NotEmpty(errors);
-        var expectedPropertyName = $"{newFakeStudent.FakeBasePerson.GetType().Name}.{nameof(newFakeStudent.FakeBasePerson.IdDocumentNumber)}";
+        var expectedPropertyName = $"{newFakeStudent.GetType().Name}.{newFakeStudent.FakeBasePerson.GetType().Name}.{newFakeStudent.FakeBasePerson.FakeIdDocument.GetType().Name}.{nameof(newFakeStudent.FakeBasePerson.FakeIdDocument.Number)}";
         Assert.All<ValidationTrailer>(errors, error => Assert.Equal(expectedPropertyName, error.PropertyName, ignoreCase: true));
     }
 
@@ -118,14 +123,15 @@ public class CreateFakeStudent : BaseTest, IDisposable
     public async Task CantValidateEmptyIDDocumentType_In_CreateFakeStudent_From_InternalFakeGrpcService_Async()
     {
         var newFakeStudent = FakeStudentBuilder.WithRandomValuesAndNif();
-        newFakeStudent.FakeBasePerson.FakeIdDocumentType = FakeIDDocumentType.Unspecified;
+        newFakeStudent.FakeBasePerson.FakeIdDocument = FakeStudentBuilder.TestEmptyFakeIDDocumentType;
 
-        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newFakeStudent, deadline: DateTime.UtcNow.AddMinutes(1)));
+        CreateFakeStudentRequest newFakeStudentRequest = new() { FakeStudent = newFakeStudent };
+        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newFakeStudentRequest, deadline: DateTime.UtcNow.AddMinutes(1)));
 
         var errors = ex.GetValidationErrors();
         Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
         Assert.NotEmpty(errors);
-        var expectedPropertyName = $"{newFakeStudent.FakeBasePerson.GetType().Name}.{nameof(newFakeStudent.FakeBasePerson.FakeIdDocumentType)}";
+        var expectedPropertyName = $"{newFakeStudent.GetType().Name}.{newFakeStudent.FakeBasePerson.GetType().Name}.{newFakeStudent.FakeBasePerson.FakeIdDocument.GetType().Name}.{nameof(newFakeStudent.FakeBasePerson.FakeIdDocument.Type)}";
         Assert.All<ValidationTrailer>(errors, error => Assert.Equal(expectedPropertyName, error.PropertyName, ignoreCase: true));
     }
 
@@ -135,12 +141,13 @@ public class CreateFakeStudent : BaseTest, IDisposable
         var newFakeStudent = FakeStudentBuilder.WithRandomValuesAndNif();
         newFakeStudent.FakeBasePerson.FirstName = FakeStudentBuilder.TestEmptyString;
 
-        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newFakeStudent, deadline: DateTime.UtcNow.AddMinutes(1)));
+        CreateFakeStudentRequest newFakeStudentRequest = new() { FakeStudent = newFakeStudent };
+        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newFakeStudentRequest, deadline: DateTime.UtcNow.AddMinutes(1)));
 
         var errors = ex.GetValidationErrors();
         Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
         Assert.NotEmpty(errors);
-        var expectedPropertyName = $"{newFakeStudent.FakeBasePerson.GetType().Name}.{nameof(newFakeStudent.FakeBasePerson.FirstName)}";
+        var expectedPropertyName = $"{newFakeStudent.GetType().Name}.{newFakeStudent.FakeBasePerson.GetType().Name}.{nameof(newFakeStudent.FakeBasePerson.FirstName)}";
         Assert.All<ValidationTrailer>(errors, error => Assert.Equal(expectedPropertyName, error.PropertyName, ignoreCase: true));
     }
 
@@ -150,12 +157,13 @@ public class CreateFakeStudent : BaseTest, IDisposable
         var newFakeStudent = FakeStudentBuilder.WithRandomValuesAndNif();
         newFakeStudent.FakeBasePerson.FirstName = FakeStudentBuilder.TestInvalidFirstname;
 
-        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newFakeStudent, deadline: DateTime.UtcNow.AddMinutes(1)));
+        CreateFakeStudentRequest newFakeStudentRequest = new() { FakeStudent = newFakeStudent };
+        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newFakeStudentRequest, deadline: DateTime.UtcNow.AddMinutes(1)));
 
         var errors = ex.GetValidationErrors();
         Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
         Assert.NotEmpty(errors);
-        var expectedPropertyName = $"{newFakeStudent.FakeBasePerson.GetType().Name}.{nameof(newFakeStudent.FakeBasePerson.FirstName)}";
+        var expectedPropertyName = $"{newFakeStudent.GetType().Name}.{newFakeStudent.FakeBasePerson.GetType().Name}.{nameof(newFakeStudent.FakeBasePerson.FirstName)}";
         Assert.All<ValidationTrailer>(errors, error => Assert.Equal(expectedPropertyName, error.PropertyName, ignoreCase: true));
     }
 
@@ -165,12 +173,13 @@ public class CreateFakeStudent : BaseTest, IDisposable
         var newFakeStudent = FakeStudentBuilder.WithRandomValuesAndNif();
         newFakeStudent.FakeBasePerson.Surname = FakeStudentBuilder.TestEmptyString;
 
-        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newFakeStudent, deadline: DateTime.UtcNow.AddMinutes(1)));
+        CreateFakeStudentRequest newFakeStudentRequest = new() { FakeStudent = newFakeStudent };
+        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newFakeStudentRequest, deadline: DateTime.UtcNow.AddMinutes(1)));
 
         var errors = ex.GetValidationErrors();
         Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
         Assert.NotEmpty(errors);
-        var expectedPropertyName = $"{newFakeStudent.FakeBasePerson.GetType().Name}.{nameof(newFakeStudent.FakeBasePerson.Surname)}";
+        var expectedPropertyName = $"{newFakeStudent.GetType().Name}.{newFakeStudent.FakeBasePerson.GetType().Name}.{nameof(newFakeStudent.FakeBasePerson.Surname)}";
         Assert.All<ValidationTrailer>(errors, error => Assert.Equal(expectedPropertyName, error.PropertyName, ignoreCase: true));
     }
 
@@ -180,12 +189,13 @@ public class CreateFakeStudent : BaseTest, IDisposable
         var newFakeStudent = FakeStudentBuilder.WithRandomValuesAndNif();
         newFakeStudent.FakeBasePerson.Surname = FakeStudentBuilder.TestInvalidSurname;
 
-        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newFakeStudent, deadline: DateTime.UtcNow.AddMinutes(1)));
+        CreateFakeStudentRequest newFakeStudentRequest = new() { FakeStudent = newFakeStudent };
+        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newFakeStudentRequest, deadline: DateTime.UtcNow.AddMinutes(1)));
 
         var errors = ex.GetValidationErrors();
         Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
         Assert.NotEmpty(errors);
-        var expectedPropertyName = $"{newFakeStudent.FakeBasePerson.GetType().Name}.{nameof(newFakeStudent.FakeBasePerson.Surname)}";
+        var expectedPropertyName = $"{newFakeStudent.GetType().Name}.{newFakeStudent.FakeBasePerson.GetType().Name}.{nameof(newFakeStudent.FakeBasePerson.Surname)}";
         Assert.All<ValidationTrailer>(errors, error => Assert.Equal(expectedPropertyName, error.PropertyName, ignoreCase: true));
     }
 
@@ -195,12 +205,13 @@ public class CreateFakeStudent : BaseTest, IDisposable
         var newFakeStudent = FakeStudentBuilder.WithRandomValuesAndNif();
         newFakeStudent.FakeBasePerson.SecondSurname = FakeStudentBuilder.TestInvalidSecondSurname;
 
-        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newFakeStudent, deadline: DateTime.UtcNow.AddMinutes(1)));
+        CreateFakeStudentRequest newFakeStudentRequest = new() { FakeStudent = newFakeStudent };
+        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newFakeStudentRequest, deadline: DateTime.UtcNow.AddMinutes(1)));
 
         var errors = ex.GetValidationErrors();
         Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
         Assert.NotEmpty(errors);
-        var expectedPropertyName = $"{newFakeStudent.FakeBasePerson.GetType().Name}.{nameof(newFakeStudent.FakeBasePerson.SecondSurname)}";
+        var expectedPropertyName = $"{newFakeStudent.GetType().Name}.{newFakeStudent.FakeBasePerson.GetType().Name}.{nameof(newFakeStudent.FakeBasePerson.SecondSurname)}";
         Assert.All<ValidationTrailer>(errors, error => Assert.Equal(expectedPropertyName, error.PropertyName, ignoreCase: true));
     }
 
@@ -210,12 +221,14 @@ public class CreateFakeStudent : BaseTest, IDisposable
         var newFakeStudent = FakeStudentBuilder.WithRandomValuesAndNif();
         newFakeStudent.Username = FakeStudentBuilder.TestInvalidUsername;
 
-        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newFakeStudent, deadline: DateTime.UtcNow.AddMinutes(1)));
+        CreateFakeStudentRequest newFakeStudentRequest = new() { FakeStudent = newFakeStudent };
+        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.CreateFakeStudentAsync(newFakeStudentRequest, deadline: DateTime.UtcNow.AddMinutes(1)));
 
         var errors = ex.GetValidationErrors();
         Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
         Assert.NotEmpty(errors);
-        Assert.All<ValidationTrailer>(errors, error => Assert.Equal(nameof(newFakeStudent.Username), error.PropertyName, ignoreCase: true));
+        var expectedPropertyName = $"{newFakeStudent.GetType().Name}.{nameof(newFakeStudent.Username)}";
+        Assert.All<ValidationTrailer>(errors, error => Assert.Equal(expectedPropertyName, error.PropertyName, ignoreCase: true));
     }
 
     public void Dispose()
