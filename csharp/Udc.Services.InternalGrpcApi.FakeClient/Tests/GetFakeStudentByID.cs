@@ -10,7 +10,7 @@ using Xunit.Abstractions;
 
 namespace Udc.Services.InternalGrpcApi.FakeClient.Tests;
 
-public class GetFakeStudentByID : BaseTest, IDisposable
+public class GetFakeStudentById : BaseTest, IDisposable
 {
     private readonly GrpcChannel _channel;
     private readonly FakeService.FakeServiceClient _client;
@@ -18,7 +18,7 @@ public class GetFakeStudentByID : BaseTest, IDisposable
     private FakeStudentBuilder FakeStudentBuilder { get; } = new();
 
 
-    public GetFakeStudentByID(ITestOutputHelper output, ITokenProvider tokenProvider)
+    public GetFakeStudentById(ITestOutputHelper output, ITokenProvider tokenProvider)
     {
         _output = output;
         _channel = Task.Run<GrpcChannel>(async () => await ServiceHelpers.CreateAuthenticatedChannelAsync(RequiredAuthenticatedServiceUrl, tokenProvider)).Result;

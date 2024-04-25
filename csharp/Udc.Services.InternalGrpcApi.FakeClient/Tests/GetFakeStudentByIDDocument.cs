@@ -10,14 +10,14 @@ using Xunit.Abstractions;
 
 namespace Udc.Services.InternalGrpcApi.FakeClient.Tests;
 
-public class GetFakeStudentByIDDocument : BaseTest, IDisposable
+public class GetFakeStudentByIdDocument : BaseTest, IDisposable
 {
     private readonly GrpcChannel _channel;
     private readonly FakeService.FakeServiceClient _client;
     private readonly ITestOutputHelper _output;
     private FakeStudentBuilder FakeStudentBuilder { get; } = new();
 
-    public GetFakeStudentByIDDocument(ITestOutputHelper output, ITokenProvider tokenProvider)
+    public GetFakeStudentByIdDocument(ITestOutputHelper output, ITokenProvider tokenProvider)
     {
         _output = output;
         _channel = Task.Run<GrpcChannel>(async () => await ServiceHelpers.CreateAuthenticatedChannelAsync(RequiredAuthenticatedServiceUrl, tokenProvider)).Result;
@@ -25,7 +25,7 @@ public class GetFakeStudentByIDDocument : BaseTest, IDisposable
     }
 
     [Fact]
-    public async Task GetsExistingFakeStudentByIDDocument_From_InternalFakeGrpcService_Async()
+    public async Task GetsExistingFakeStudentByIdDocument_From_InternalFakeGrpcService_Async()
     {
         var existingFakeStudent = FakeStudentBuilder.WithRandomValuesAndNif();
         CreateFakeStudentRequest existingFakeStudentRequest = new() { FakeStudent = existingFakeStudent };
@@ -43,7 +43,7 @@ public class GetFakeStudentByIDDocument : BaseTest, IDisposable
     }
 
     [Fact]
-    public async Task CantGetNotExistingFakeStudentByIDDocument_From_InternalFakeGrpcService_Async()
+    public async Task CantGetNotExistingFakeStudentByIdDocument_From_InternalFakeGrpcService_Async()
     {
         var fakeStudent = FakeStudentBuilder.Build();
         GetFakeStudentByIdDocumentRequest request = new() { FakeIdDocument = FakeStudentBuilder.TestNotExistingFakeIDDocument };
@@ -53,9 +53,9 @@ public class GetFakeStudentByIDDocument : BaseTest, IDisposable
     }
 
     [Fact]
-    public async Task CantValidateEmptyIDDocumentNumber_In_GetFakeStudentByIDDocument_From_InternalFakeGrpcService_Async()
+    public async Task CantValidateEmptyIdDocumentNumber_In_GetFakeStudentByIDDocument_From_InternalFakeGrpcService_Async()
     {
-        var fakeStudent = FakeStudentBuilder.Build();
+        var fakeStudent = FakeStudentBuilder.Build(); 
         GetFakeStudentByIdDocumentRequest request = new() { FakeIdDocument = FakeStudentBuilder.TestEmptyFakeIDDocumentNumber };
 
         var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.GetFakeStudentByIdDocumentAsync(request, deadline: DateTime.UtcNow.AddMinutes(1)));
@@ -68,7 +68,7 @@ public class GetFakeStudentByIDDocument : BaseTest, IDisposable
     }
 
     [Fact]
-    public async Task CantValidateInvalidIDDocumentNumber_In_GetFakeStudentByIDDocument_From_InternalFakeGrpcService_Async()
+    public async Task CantValidateInvalidIdDocumentNumber_In_GetFakeStudentByIDDocument_From_InternalFakeGrpcService_Async()
     {
         var fakeStudent = FakeStudentBuilder.Build();
         GetFakeStudentByIdDocumentRequest request = new() { FakeIdDocument = FakeStudentBuilder.TestInvalidFakeIDDocument };
@@ -83,7 +83,7 @@ public class GetFakeStudentByIDDocument : BaseTest, IDisposable
     }
 
     [Fact]
-    public async Task CantValidateEmptyIDDocumentType_In_GetFakeStudentByIDDocument_From_InternalFakeGrpcService_Async()
+    public async Task CantValidateEmptyIdDocumentType_In_GetFakeStudentByIDDocument_From_InternalFakeGrpcService_Async()
     {
         var fakeStudent = FakeStudentBuilder.Build();
         GetFakeStudentByIdDocumentRequest request = new() { FakeIdDocument = FakeStudentBuilder.TestEmptyFakeIDDocumentType };
