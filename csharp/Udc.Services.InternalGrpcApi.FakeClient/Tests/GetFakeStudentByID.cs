@@ -34,21 +34,21 @@ public class GetFakeStudentByID : BaseTest, IDisposable
         newFakeStudent.FakeBasePerson.FakeBaseEntity.Id = newFakeStudentIdResponse.Id;
         _output.WriteLine($"NewFakeStudentId: {newFakeStudent.FakeBasePerson.FakeBaseEntity.Id}");
 
-        GetFakeStudentByIDRequest request = new() { Id = newFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
-        var fakeStudentResponseFromService = await _client.GetFakeStudentByIDAsync(request, deadline: DateTime.UtcNow.AddMinutes(1));
+        GetFakeStudentByIdRequest request = new() { Id = newFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
+        var fakeStudentResponseFromService = await _client.GetFakeStudentByIdAsync(request, deadline: DateTime.UtcNow.AddMinutes(1));
 
         Assert.Equal<FakeStudent>(newFakeStudent, fakeStudentResponseFromService.FakeStudent);
 
-        DeleteFakeStudentByIDRequest deleteRequest = new() { Id = newFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
-        await _client.DeleteFakeStudentByIDAsync(deleteRequest, deadline: DateTime.UtcNow.AddMinutes(1));
+        DeleteFakeStudentByIdRequest deleteRequest = new() { Id = newFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
+        await _client.DeleteFakeStudentByIdAsync(deleteRequest, deadline: DateTime.UtcNow.AddMinutes(1));
     }
 
     [Fact]
     public async Task CantGetNotExistingFakeStudentById_From_InternalFakeGrpcService_Async()
     {
-        GetFakeStudentByIDRequest request = new() { Id = FakeStudentBuilder.TestNotExistingId };
+        GetFakeStudentByIdRequest request = new() { Id = FakeStudentBuilder.TestNotExistingId };
 
-        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.GetFakeStudentByIDAsync(request, deadline: DateTime.UtcNow.AddMinutes(1)));
+        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.GetFakeStudentByIdAsync(request, deadline: DateTime.UtcNow.AddMinutes(1)));
 
         Assert.Equal(StatusCode.NotFound, ex.StatusCode);
     }
@@ -56,9 +56,9 @@ public class GetFakeStudentByID : BaseTest, IDisposable
     [Fact]
     public async Task CantValidateEmptyId_In_GetFakeStudentById_From_InternalFakeGrpcService_Async()
     {
-        GetFakeStudentByIDRequest request = new() { Id = " " };
+        GetFakeStudentByIdRequest request = new() { Id = " " };
 
-        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.GetFakeStudentByIDAsync(request, deadline: DateTime.UtcNow.AddMinutes(1)));
+        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.GetFakeStudentByIdAsync(request, deadline: DateTime.UtcNow.AddMinutes(1)));
 
         var errors = ex.GetValidationErrors();
         Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);
@@ -69,9 +69,9 @@ public class GetFakeStudentByID : BaseTest, IDisposable
     [Fact]
     public async Task CantValidateInvalidId_In_GetFakeStudentById_From_InternalFakeGrpcService_Async()
     {
-        GetFakeStudentByIDRequest request = new() { Id = FakeStudentBuilder.TestInvalidId };
+        GetFakeStudentByIdRequest request = new() { Id = FakeStudentBuilder.TestInvalidId };
 
-        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.GetFakeStudentByIDAsync(request, deadline: DateTime.UtcNow.AddMinutes(1)));
+        var ex = await Assert.ThrowsAsync<RpcException>(async () => await _client.GetFakeStudentByIdAsync(request, deadline: DateTime.UtcNow.AddMinutes(1)));
 
         var errors = ex.GetValidationErrors();
         Assert.Equal(StatusCode.InvalidArgument, ex.StatusCode);

@@ -38,12 +38,12 @@ public class UpdateFakeStudent : BaseTest, IDisposable
         UpsertFakeStudentRequest upsertingFakeStudentRequest = new() { FakeStudent = upsertingFakeStudent };
         await _client.UpsertFakeStudentAsync(upsertingFakeStudentRequest, deadline: DateTime.UtcNow.AddMinutes(1));
 
-        GetFakeStudentByIDRequest getUpsertedFakeStudentIDrequest = new() { Id = upsertingFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
-        var updatedFakeStudentResponse = await _client.GetFakeStudentByIDAsync(getUpsertedFakeStudentIDrequest, deadline: DateTime.UtcNow.AddMinutes(1));
+        GetFakeStudentByIdRequest getUpsertedFakeStudentIDrequest = new() { Id = upsertingFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
+        var updatedFakeStudentResponse = await _client.GetFakeStudentByIdAsync(getUpsertedFakeStudentIDrequest, deadline: DateTime.UtcNow.AddMinutes(1));
         Assert.Equal<FakeStudent>(upsertingFakeStudent, updatedFakeStudentResponse.FakeStudent);
 
-        DeleteFakeStudentByIDRequest deleteRequest = new() { Id = newFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
-        await _client.DeleteFakeStudentByIDAsync(deleteRequest, deadline: DateTime.UtcNow.AddMinutes(1));
+        DeleteFakeStudentByIdRequest deleteRequest = new() { Id = newFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
+        await _client.DeleteFakeStudentByIdAsync(deleteRequest, deadline: DateTime.UtcNow.AddMinutes(1));
     }
 
     [Fact]
@@ -55,12 +55,12 @@ public class UpdateFakeStudent : BaseTest, IDisposable
         var upsertingFakeStudentIdResponse = await _client.UpsertFakeStudentAsync(newFakeStudentRequest, deadline: DateTime.UtcNow.AddMinutes(1));
         newFakeStudent.FakeBasePerson.FakeBaseEntity.Id = upsertingFakeStudentIdResponse.Id;
 
-        GetFakeStudentByIDRequest getUpsertedFakeStudentIDrequest = new() { Id = newFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
-        var updatedFakeStudentResponse = await _client.GetFakeStudentByIDAsync(getUpsertedFakeStudentIDrequest, deadline: DateTime.UtcNow.AddMinutes(1));
+        GetFakeStudentByIdRequest getUpsertedFakeStudentIDrequest = new() { Id = newFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
+        var updatedFakeStudentResponse = await _client.GetFakeStudentByIdAsync(getUpsertedFakeStudentIDrequest, deadline: DateTime.UtcNow.AddMinutes(1));
         Assert.Equal<FakeStudent>(newFakeStudent, updatedFakeStudentResponse.FakeStudent);
 
-        DeleteFakeStudentByIDRequest deleteRequest = new() { Id = newFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
-        await _client.DeleteFakeStudentByIDAsync(deleteRequest, deadline: DateTime.UtcNow.AddMinutes(1));
+        DeleteFakeStudentByIdRequest deleteRequest = new() { Id = newFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
+        await _client.DeleteFakeStudentByIdAsync(deleteRequest, deadline: DateTime.UtcNow.AddMinutes(1));
     }
 
     [Fact]
@@ -82,8 +82,8 @@ public class UpdateFakeStudent : BaseTest, IDisposable
         Assert.All<ResourceDuplicateTrailer>(errors, error => Assert.Equal(upsertingDuplicateFakeStudentByIDDocument.GetType().Name, error.Resource, ignoreCase: true));
         Assert.Single(errors.First().Properties.Keys.Where(k => k.Equals(nameof(upsertingDuplicateFakeStudentByIDDocument.FakeBasePerson.FakeIdDocument), StringComparison.OrdinalIgnoreCase)));
 
-        DeleteFakeStudentByIDRequest deleteRequest = new() { Id = newFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
-        await _client.DeleteFakeStudentByIDAsync(deleteRequest, deadline: DateTime.UtcNow.AddMinutes(1));
+        DeleteFakeStudentByIdRequest deleteRequest = new() { Id = newFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
+        await _client.DeleteFakeStudentByIdAsync(deleteRequest, deadline: DateTime.UtcNow.AddMinutes(1));
     }
 
     [Fact]
@@ -105,8 +105,8 @@ public class UpdateFakeStudent : BaseTest, IDisposable
         Assert.All<ResourceDuplicateTrailer>(errors, error => Assert.Equal(upsertingDuplicateFakeStudentByUsername.GetType().Name, error.Resource, ignoreCase: true));
         Assert.Single(errors.First().Properties.Keys.Where(k => k.Equals(nameof(upsertingDuplicateFakeStudentByUsername.Username), StringComparison.OrdinalIgnoreCase)));
 
-        DeleteFakeStudentByIDRequest deleteRequest = new() { Id = newFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
-        await _client.DeleteFakeStudentByIDAsync(deleteRequest, deadline: DateTime.UtcNow.AddMinutes(1));
+        DeleteFakeStudentByIdRequest deleteRequest = new() { Id = newFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
+        await _client.DeleteFakeStudentByIdAsync(deleteRequest, deadline: DateTime.UtcNow.AddMinutes(1));
     }
 
     [Fact]

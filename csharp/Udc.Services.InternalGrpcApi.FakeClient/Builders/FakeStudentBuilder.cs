@@ -8,16 +8,16 @@ public class FakeStudentBuilder
     private FakeStudent _fakeStudent;
 
     public string TestId => "10000";
-    public FakeIDDocument FakeTestIDDocument => new() { Number = "36991036K", Type = FakeIDDocumentType.Nif };
+    public FakeIdDocument FakeTestIDDocument => new() { Number = "36991036K", Type = FakeIdDocumentType.Nif };
     public string TestFirstName => "José Filogonio";
     public string TestSurname => "Juez";
     public string TestSecondSurname => "Bañuelos";
     public string? TestUsername => "filogonio.juez";
 
-    public FakeIDDocument TestNotExistingFakeIDDocument => new() { Number = "00010001A", Type = FakeIDDocumentType.Nif };
-    public FakeIDDocument TestInvalidFakeIDDocument => new() { Number = "0001$001A", Type = FakeIDDocumentType.Nif };
-    public FakeIDDocument TestEmptyFakeIDDocumentNumber => new() { Number = " ", Type = FakeIDDocumentType.Nif };
-    public FakeIDDocument TestEmptyFakeIDDocumentType => new() { Number = "36991036K", Type = FakeIDDocumentType.Unspecified };
+    public FakeIdDocument TestNotExistingFakeIDDocument => new() { Number = "00010001A", Type = FakeIdDocumentType.Nif };
+    public FakeIdDocument TestInvalidFakeIDDocument => new() { Number = "0001$001A", Type = FakeIdDocumentType.Nif };
+    public FakeIdDocument TestEmptyFakeIDDocumentNumber => new() { Number = " ", Type = FakeIdDocumentType.Nif };
+    public FakeIdDocument TestEmptyFakeIDDocumentType => new() { Number = "36991036K", Type = FakeIdDocumentType.Unspecified };
 
     public const string TestEmptyString = " ";
     public const string TestNotExistingId = "00000";
@@ -74,7 +74,7 @@ public class FakeStudentBuilder
                 {
                     Id = null
                 },
-                FakeIdDocument = new() { Number = randomIDDocumentNumber, Type = FakeIDDocumentType.Nif },
+                FakeIdDocument = new() { Number = randomIDDocumentNumber, Type = FakeIdDocumentType.Nif },
                 FirstName = randomFirstName,
                 Surname = randomSurname,
                 SecondSurname = randomSecondSurname,

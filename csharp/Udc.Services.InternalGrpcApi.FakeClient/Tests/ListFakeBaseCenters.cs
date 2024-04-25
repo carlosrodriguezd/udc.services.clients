@@ -8,14 +8,14 @@ using Udc.Services.InternalGrpcApi.FakeClient.Builders;
 
 namespace Udc.Services.InternalGrpcApi.FakeClient.Tests;
 
-public class GetAllFakeBaseCenters : BaseTest, IDisposable
+public class ListFakeBaseCenters : BaseTest, IDisposable
 {
     private readonly GrpcChannel _channel;
     private readonly FakeService.FakeServiceClient _client;
     private readonly ITestOutputHelper _output;
     private FakeCenterBuilder FakeCenterBuilder { get; } = new();
 
-    public GetAllFakeBaseCenters(ITestOutputHelper output)
+    public ListFakeBaseCenters(ITestOutputHelper output)
     {
         _output = output;
         _channel = ServiceHelpers.CreateUnauthenticatedChannel(NotRequiredAuthenticatedServiceUrl);
@@ -23,9 +23,9 @@ public class GetAllFakeBaseCenters : BaseTest, IDisposable
     }
 
     [Fact]
-    public async Task GetsAllFakeBaseCenters_From_InternalFakeGrpcService_Async()
+    public async Task ListsFakeBaseCenters_From_InternalFakeGrpcService_Async()
     {
-        var fakeBaseCentersResponseFromService = await _client.GetAllFakeBaseCentersAsync(new Empty(), deadline: DateTime.UtcNow.AddMinutes(1));
+        var fakeBaseCentersResponseFromService = await _client.ListFakeBaseCentersAsync(new Empty(), deadline: DateTime.UtcNow.AddMinutes(1));
 
         var expectedFakeBaseCenter = FakeCenterBuilder.WithDefaultValues();
         Assert.Contains<FakeBaseCenter>(expectedFakeBaseCenter, fakeBaseCentersResponseFromService.FakeBaseCenters);

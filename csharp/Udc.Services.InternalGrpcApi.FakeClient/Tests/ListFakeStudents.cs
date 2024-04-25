@@ -9,14 +9,14 @@ using Xunit;
 
 namespace Udc.Services.InternalGrpcApi.FakeClient.Tests;
 
-public class GetAllFakeStudents : BaseTest, IDisposable
+public class ListFakeStudents : BaseTest, IDisposable
 {
     private readonly GrpcChannel _channel;
     private readonly FakeService.FakeServiceClient _client;
     private readonly ITestOutputHelper _output;
     private FakeStudentBuilder FakeStudentBuilder { get; } = new();
 
-    public GetAllFakeStudents(ITestOutputHelper output, ITokenProvider tokenProvider)
+    public ListFakeStudents(ITestOutputHelper output, ITokenProvider tokenProvider)
     {
         _output = output;
         _channel = Task.Run<GrpcChannel>(async () => await ServiceHelpers.CreateAuthenticatedChannelAsync(RequiredAuthenticatedServiceUrl, tokenProvider)).Result;
@@ -24,7 +24,7 @@ public class GetAllFakeStudents : BaseTest, IDisposable
     }
 
     [Fact]
-    public async Task GetsAllFakeStudents_From_InternalFakeGrpcService_Async()
+    public async Task ListsFakeStudents_From_InternalFakeGrpcService_Async()
     {
         var existingFakeStudent = FakeStudentBuilder.WithRandomValuesAndNif();
         CreateFakeStudentRequest existingFakeStudentRequest = new() { FakeStudent = existingFakeStudent };
@@ -32,12 +32,12 @@ public class GetAllFakeStudents : BaseTest, IDisposable
         existingFakeStudent.FakeBasePerson.FakeBaseEntity.Id = existingFakeStudentIdResponse.Id;
         _output.WriteLine($"ExistingFakeStudentId: {existingFakeStudent.FakeBasePerson.FakeBaseEntity.Id}");
 
-        var fakeStudentsResponseFromService = await _client.GetAllFakeStudentsAsync(new Empty(), deadline: DateTime.UtcNow.AddMinutes(1));
+        var fakeStudentsResponseFromService = await _client.ListFakeStudentsAsync(new Empty(), deadline: DateTime.UtcNow.AddMinutes(1));
 
         Assert.Contains<FakeStudent>(existingFakeStudent, fakeStudentsResponseFromService.FakeStudents);
 
-        DeleteFakeStudentByIDRequest deleteRequest = new() { Id = existingFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
-        await _client.DeleteFakeStudentByIDAsync(deleteRequest, deadline: DateTime.UtcNow.AddMinutes(1));
+        DeleteFakeStudentByIdRequest deleteRequest = new() { Id = existingFakeStudent.FakeBasePerson.FakeBaseEntity.Id };
+        await _client.DeleteFakeStudentByIdAsync(deleteRequest, deadline: DateTime.UtcNow.AddMinutes(1));
     }
 
     public void Dispose()
