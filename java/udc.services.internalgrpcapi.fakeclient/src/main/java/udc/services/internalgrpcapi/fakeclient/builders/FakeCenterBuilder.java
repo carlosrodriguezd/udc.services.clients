@@ -3,7 +3,7 @@ package udc.services.internalgrpcapi.fakeclient.builders;
 import com.google.protobuf.StringValue;
 
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeBaseCenter;
-import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeBaseEntity;;
+import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeBaseEntity;
 
 public class FakeCenterBuilder {
     

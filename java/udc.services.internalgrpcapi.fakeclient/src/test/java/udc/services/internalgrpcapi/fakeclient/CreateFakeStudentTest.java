@@ -49,10 +49,10 @@ import udc.services.internalgrpcapi.fakeclient.helpers.ServiceHelpers;
 import udc.services.internalgrpcapi.fakeclient.oauth.BearerToken;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentRequest;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentResponse;
-import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.DeleteFakeStudentByIDRequest;
+import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.DeleteFakeStudentByIdRequest;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeStudent;
-import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDRequest;
-import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIDResponse;
+import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIdRequest;
+import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetFakeStudentByIdResponse;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.FakeServiceGrpc;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.FakeServiceGrpc.FakeServiceBlockingStub;
 import udc.services.internalgrpcapi.fakeclient.trailers.ResourceDuplicateTrailer;
@@ -61,7 +61,7 @@ import udc.services.internalgrpcapi.fakeclient.trailers.ValidationTrailer;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class CreateFakeStudentTest extends BaseTest {
 	
-    private static final Logger logger = LogManager.getLogger(GetAllFakeStudentsTest.class.getName());
+    private static final Logger logger = LogManager.getLogger(CreateFakeStudentTest.class.getName());
 
 	private FakeServiceBlockingStub blockingStub;
     private FakeStudentBuilder fakeStudentBuilder = new FakeStudentBuilder();
@@ -90,45 +90,45 @@ class CreateFakeStudentTest extends BaseTest {
 		FakeStudent newFakeStudent = fakeStudentBuilder.withRandomValuesAndNif();
         CreateFakeStudentRequest newFakeStudentRequest = CreateFakeStudentRequest.newBuilder().setFakeStudent(newFakeStudent).build();
 		CreateFakeStudentResponse newFakeStudentIdResponse = blockingStub.withCallCredentials(callCredentials).createFakeStudent(newFakeStudentRequest);
-		newFakeStudent = fakeStudentBuilder.withNewID(newFakeStudent, newFakeStudentIdResponse.getId());
+		newFakeStudent = fakeStudentBuilder.withNewId(newFakeStudent, newFakeStudentIdResponse.getId());
 		
-		GetFakeStudentByIDRequest getNewFakeStudentIDrequest = GetFakeStudentByIDRequest.newBuilder().setId(newFakeStudentIdResponse.getId()).build();
-		GetFakeStudentByIDResponse newFakeStudentResponseFromService = blockingStub.withCallCredentials(callCredentials).getFakeStudentByID(getNewFakeStudentIDrequest);		
+		GetFakeStudentByIdRequest getNewFakeStudentIdrequest = GetFakeStudentByIdRequest.newBuilder().setId(newFakeStudentIdResponse.getId()).build();
+		GetFakeStudentByIdResponse newFakeStudentResponseFromService = blockingStub.withCallCredentials(callCredentials).getFakeStudentById(getNewFakeStudentIdrequest);		
 		assertEquals(newFakeStudent, newFakeStudentResponseFromService.getFakeStudent());
 		
-		DeleteFakeStudentByIDRequest deleteRequest = DeleteFakeStudentByIDRequest.newBuilder().setId(newFakeStudent.getFakeBasePerson().getFakeBaseEntity().getId().getValue()).build();
-		blockingStub.withCallCredentials(callCredentials).deleteFakeStudentByID(deleteRequest);
+		DeleteFakeStudentByIdRequest deleteRequest = DeleteFakeStudentByIdRequest.newBuilder().setId(newFakeStudent.getFakeBasePerson().getFakeBaseEntity().getId().getValue()).build();
+		blockingStub.withCallCredentials(callCredentials).deleteFakeStudentById(deleteRequest);
 	}
 	
 	@Test
-	void cantCreateDuplicateFakeStudentByIDDocument_ThroughTo_InternalFakeGrpcService() throws JsonMappingException, JsonProcessingException {
+	void cantCreateDuplicateFakeStudentByIdDocument_ThroughTo_InternalFakeGrpcService() throws JsonMappingException, JsonProcessingException {
 	
 	    FakeStudent newFakeStudent = fakeStudentBuilder.withRandomValuesAndNif();
         CreateFakeStudentRequest newFakeStudentRequest = CreateFakeStudentRequest.newBuilder().setFakeStudent(newFakeStudent).build();
 		CreateFakeStudentResponse newFakeStudentIdResponse = blockingStub.withCallCredentials(callCredentials).createFakeStudent(newFakeStudentRequest);
 
 		StatusRuntimeException ex = assertThrows(StatusRuntimeException.class, () -> {
-    		FakeStudent newDuplicateFakeStudentByIDDocument = fakeStudentBuilder.withRandomValuesAndNif();
-    	    newDuplicateFakeStudentByIDDocument = fakeStudentBuilder.withNewIDDocumentNumber(
-    				newDuplicateFakeStudentByIDDocument, newFakeStudent.getFakeBasePerson().getFakeIdDocument().getNumber(), newFakeStudent.getFakeBasePerson().getFakeIdDocument().getType());
-            CreateFakeStudentRequest newDuplicateFakeStudentByIDDocumentRequest = CreateFakeStudentRequest.newBuilder().setFakeStudent(newDuplicateFakeStudentByIDDocument).build();
-        	blockingStub.withCallCredentials(callCredentials).createFakeStudent(newDuplicateFakeStudentByIDDocumentRequest);
+    		FakeStudent newDuplicateFakeStudentByIdDocument = fakeStudentBuilder.withRandomValuesAndNif();
+    	    newDuplicateFakeStudentByIdDocument = fakeStudentBuilder.withNewIdDocumentNumber(
+    				newDuplicateFakeStudentByIdDocument, newFakeStudent.getFakeBasePerson().getFakeIdDocument().getNumber(), newFakeStudent.getFakeBasePerson().getFakeIdDocument().getType());
+            CreateFakeStudentRequest newDuplicateFakeStudentByIdDocumentRequest = CreateFakeStudentRequest.newBuilder().setFakeStudent(newDuplicateFakeStudentByIdDocument).build();
+        	blockingStub.withCallCredentials(callCredentials).createFakeStudent(newDuplicateFakeStudentByIdDocumentRequest);
     	});
 		
 	    List<ResourceDuplicateTrailer> errors  = ServiceHelpers.getResourceDuplicateErrors(ex);
 	    assertEquals(Status.ALREADY_EXISTS.getCode(), ex.getStatus().getCode());
         assertTrue(errors.size() > 0);
         assertEquals(newFakeStudent.getClass().getSimpleName(), errors.get(0).getResource());
-        assertTrue(errors.get(0).getProperties().containsKey("FakeIDDocument"));
+        assertTrue(errors.get(0).getProperties().containsKey("FakeIdDocument"));
         
-		DeleteFakeStudentByIDRequest deleteRequest = DeleteFakeStudentByIDRequest.newBuilder().setId(newFakeStudentIdResponse.getId()).build();
-		blockingStub.withCallCredentials(callCredentials).deleteFakeStudentByID(deleteRequest);
+		DeleteFakeStudentByIdRequest deleteRequest = DeleteFakeStudentByIdRequest.newBuilder().setId(newFakeStudentIdResponse.getId()).build();
+		blockingStub.withCallCredentials(callCredentials).deleteFakeStudentById(deleteRequest);
 	}
 
 	@Test
-	void cantValidateEmptyIDDocument_In_CreateFakeStudent_From_InternalFakeGrpcService() throws JsonMappingException, JsonProcessingException {
+	void cantValidateEmptyIdDocument_In_CreateFakeStudent_From_InternalFakeGrpcService() throws JsonMappingException, JsonProcessingException {
 	    
-		FakeStudent newFakeStudent = fakeStudentBuilder.withRandomValuesAndEmptyIDDocumentNumber();
+		FakeStudent newFakeStudent = fakeStudentBuilder.withRandomValuesAndEmptyIdDocumentNumber();
         CreateFakeStudentRequest newFakeStudentRequest = CreateFakeStudentRequest.newBuilder().setFakeStudent(newFakeStudent).build();
 
 		StatusRuntimeException ex = assertThrows(StatusRuntimeException.class, () -> {

@@ -8,7 +8,7 @@ public class RandomHelpers {
 
     private static NameGenerator _personGenerator = new NameGenerator();
 
-    public static String generateRandomNifIDDocumentNumber()
+    public static String generateRandomNifIdDocumentNumber()
     {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         char letter = chars.charAt(new Random().nextInt(chars.length()));

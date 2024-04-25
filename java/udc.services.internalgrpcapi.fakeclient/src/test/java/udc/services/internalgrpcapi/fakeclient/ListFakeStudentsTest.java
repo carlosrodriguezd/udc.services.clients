@@ -31,16 +31,16 @@ import udc.services.internalgrpcapi.fakeclient.helpers.ServiceHelpers;
 import udc.services.internalgrpcapi.fakeclient.oauth.BearerToken;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentRequest;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.CreateFakeStudentResponse;
-import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.DeleteFakeStudentByIDRequest;
+import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.DeleteFakeStudentByIdRequest;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeStudent;
-import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeStudentsResponse;
+import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.ListFakeStudentsResponse;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.FakeServiceGrpc;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.FakeServiceGrpc.FakeServiceBlockingStub;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class GetAllFakeStudentsTest extends BaseTest {
+class ListFakeStudentsTest extends BaseTest {
 	
-    private static final Logger logger = LogManager.getLogger(GetAllFakeStudentsTest.class.getName());
+    private static final Logger logger = LogManager.getLogger(ListFakeStudentsTest.class.getName());
 
 	private FakeServiceBlockingStub blockingStub;
     private FakeStudentBuilder fakeStudentBuilder = new FakeStudentBuilder();
@@ -64,20 +64,20 @@ class GetAllFakeStudentsTest extends BaseTest {
     }
     
 	@Test
-	void getsAllFakeStudents_From_InternalFakeGrpcService() {
+	void listsFakeStudents_From_InternalFakeGrpcService() {
 		
 		FakeStudent existingFakeStudent = fakeStudentBuilder.withRandomValuesAndNif();
         CreateFakeStudentRequest existingFakeStudentRequest = CreateFakeStudentRequest.newBuilder().setFakeStudent(existingFakeStudent).build();
 		CreateFakeStudentResponse existingFakeStudentIdResponse = blockingStub.withCallCredentials(callCredentials).createFakeStudent(existingFakeStudentRequest);
-		existingFakeStudent = fakeStudentBuilder.withNewID(existingFakeStudent, existingFakeStudentIdResponse.getId());
+		existingFakeStudent = fakeStudentBuilder.withNewId(existingFakeStudent, existingFakeStudentIdResponse.getId());
 		logger.info(String.format("ExistingFakeStudentId: %s", existingFakeStudentIdResponse.getId()));
 
-		GetAllFakeStudentsResponse fakeStudentsResponseFromService = blockingStub.withCallCredentials(callCredentials).getAllFakeStudents(Empty.newBuilder().build());
+		ListFakeStudentsResponse fakeStudentsResponseFromService = blockingStub.withCallCredentials(callCredentials).listFakeStudents(Empty.newBuilder().build());
 		
 		assertTrue(fakeStudentsResponseFromService.getFakeStudentsList().contains(existingFakeStudent));
 		
-		DeleteFakeStudentByIDRequest deleteRequest = DeleteFakeStudentByIDRequest.newBuilder().setId(existingFakeStudent.getFakeBasePerson().getFakeBaseEntity().getId().getValue()).build();
-		blockingStub.withCallCredentials(callCredentials).deleteFakeStudentByID(deleteRequest);
+		DeleteFakeStudentByIdRequest deleteRequest = DeleteFakeStudentByIdRequest.newBuilder().setId(existingFakeStudent.getFakeBasePerson().getFakeBaseEntity().getId().getValue()).build();
+		blockingStub.withCallCredentials(callCredentials).deleteFakeStudentById(deleteRequest);
 	}
 	
 	@AfterAll  

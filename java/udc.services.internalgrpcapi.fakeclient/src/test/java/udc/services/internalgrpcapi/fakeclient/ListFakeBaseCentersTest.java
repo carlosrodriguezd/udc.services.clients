@@ -20,14 +20,14 @@ import io.grpc.InsecureChannelCredentials;
 import io.grpc.ManagedChannel;
 import udc.services.internalgrpcapi.fakeclient.builders.FakeCenterBuilder;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeBaseCenter;
-import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.GetAllFakeBaseCentersResponse;
+import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.ListFakeBaseCentersResponse;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.FakeServiceGrpc;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.FakeServiceGrpc.FakeServiceBlockingStub;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class GetAllFakeBaseCentersTest extends BaseTest {
+class ListFakeBaseCentersTest extends BaseTest {
 	
-    private static final Logger logger = LogManager.getLogger(GetAllFakeBaseCentersTest.class.getName());
+    private static final Logger logger = LogManager.getLogger(ListFakeBaseCentersTest.class.getName());
 
 	private FakeServiceBlockingStub blockingStub;
     private FakeCenterBuilder fakeCenterBuilder = new FakeCenterBuilder();
@@ -42,9 +42,9 @@ class GetAllFakeBaseCentersTest extends BaseTest {
     }
     
 	@Test
-	void getsAllFakeBaseCenters_From_InternalFakeGrpcService() {
+	void listsFakeBaseCenters_From_InternalFakeGrpcService() {
         
-		GetAllFakeBaseCentersResponse fakeBaseCentersResponseFromService = blockingStub.getAllFakeBaseCenters(Empty.newBuilder().build());
+		ListFakeBaseCentersResponse fakeBaseCentersResponseFromService = blockingStub.listFakeBaseCenters(Empty.newBuilder().build());
 		
 		FakeBaseCenter fakeBaseCenter = fakeCenterBuilder.withDefaultValues();
 		assertTrue(fakeBaseCentersResponseFromService.getFakeBaseCentersList().contains(fakeBaseCenter));

@@ -7,6 +7,9 @@ package udc.services.protos.fake;
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
 
+
+
+
 /*
 The Fake Service API allows you to create, get, update, upsert, and delete individual not-real students. It helps developers test API connection and flow meanwhile their real service API is not ready or not fully available.
 
@@ -17,18 +20,18 @@ Newest proto files, which define the contract of gRPC services and messages, are
 </ul>
  */
 service FakeService {
-  // Returns all the fake base centers. <br>_Unsecured endpoint_.
-  rpc GetAllFakeBaseCenters (google.protobuf.Empty) returns (GetAllFakeBaseCentersResponse);
-  // Returns all the fake base students. <br>_Secured endpoint_.
-  rpc GetAllFakeStudents (google.protobuf.Empty) returns (GetAllFakeStudentsResponse);
-  // Retrieves the details of an existing fake student by its identifier document and ID type document. <br>_Secured endpoint_.
-  rpc GetFakeStudentByIDDocument (GetFakeStudentByIDDocumentRequest) returns (GetFakeStudentByIDDocumentResponse);
+  // Retrieves the details of an existing fake student by its identifier document and Id type document. <br>_Secured endpoint_.
+  rpc GetFakeStudentByIdDocument (GetFakeStudentByIdDocumentRequest) returns (GetFakeStudentByIdDocumentResponse);
   // Retrieves the details of an existing fake student by its internal identifier. <br>_Secured endpoint_.
-  rpc GetFakeStudentByID (GetFakeStudentByIDRequest) returns (GetFakeStudentByIDResponse); 
+  rpc GetFakeStudentById (GetFakeStudentByIdRequest) returns (GetFakeStudentByIdResponse); 
+  // Returns all the fake base centers. <br>_Unsecured endpoint_.
+  rpc ListFakeBaseCenters (google.protobuf.Empty) returns (ListFakeBaseCentersResponse);
+  // Returns all the fake base students. <br>_Secured endpoint_.
+  rpc ListFakeStudents (google.protobuf.Empty) returns (ListFakeStudentsResponse);
   // Creates a new fake student. Returns its auto-generated internal identifier if the create succeeded. <br>_Secured endpoint_.
   rpc CreateFakeStudent (CreateFakeStudentRequest) returns (CreateFakeStudentResponse);
   // Deletes the exisiting fake student specified by its internal identifier. <br>_Secured endpoint_.
-  rpc DeleteFakeStudentByID (DeleteFakeStudentByIDRequest) returns (google.protobuf.Empty);
+  rpc DeleteFakeStudentById (DeleteFakeStudentByIdRequest) returns (google.protobuf.Empty);
   // Updates the exisiting fake student specified by its internal identifier. All fake student's properties will be changed, setting the passed values. <br>_Secured endpoint_.
   rpc UpdateFakeStudent (UpdateFakeStudentRequest) returns (google.protobuf.Empty);
   // Creates a new fake student or updates the exisiting fake student based on the value of its internal identifier. Returns its auto-generated internal identifier if the upsert succeeded. <br>_Secured endpoint_.
@@ -40,10 +43,10 @@ service FakeService {
 
 // Enums
 
-// Type of ID document that can be used to prove a person's identity.
-enum FakeIDDocumentType {
+// Type of Id document that can be used to prove a person's identity.
+enum FakeIdDocumentType {
   FAKE_ID_DOCUMENT_TYPE_UNSPECIFIED = 0; // Unspecified or unknown.
-  FAKE_ID_DOCUMENT_TYPE_NIF = 1; // Spanish National ID (DNI).
+  FAKE_ID_DOCUMENT_TYPE_NIF = 1; // Spanish National Id (DNI).
   FAKE_ID_DOCUMENT_TYPE_NIE = 2; // Foreigner Identification Number in Spain.
   FAKE_ID_DOCUMENT_TYPE_PASSPORT = 3; // Passport.
   FAKE_ID_DOCUMENT_TYPE_EU = 4; // ID document in the European Union.
@@ -57,23 +60,29 @@ enum FakeIDDocumentType {
 
 // Any entity has an internal id.
 message FakeBaseEntity {
-  google.protobuf.StringValue id = 1; /* _Optional_. Default: _none_. Validation: _^[a-zA-Z0-9.-]{1,100}$_. <br>Unique internal identifier for the entity. */
+  google.protobuf.StringValue id = 1; /* _Optional_. Default: _null_. Validation: _^[a-zA-Z0-9.-]{1,100}$_. <br>Unique internal identifier for the entity. */
 }
 
-// Fake Base Center describes, with basic properties, the fake faculties, schools and other cCenterCodeRegularExpressionenters where studies are taught.
+// Fake Base Center describes, with essential properties, the fake faculties, schools and other cCenterCodeRegularExpressionenters where studies are taught.
 message FakeBaseCenter {
-  FakeBaseEntity fake_base_entity = 1; /* Identification of the fake center. Unique identifier for the center will be the same the center's code.' */
+  FakeBaseEntity fake_base_entity = 1; /* _Required_. _Unique_. <br>Identification of the fake center. Unique identifier for the center will be the same the center's code.' */
   string code = 2; /* _Required_. _Unique_. Validation: _^[a-zA-Z0-9]{3}$_. <br>The code of the fake center. */
   string name = 3; /* _Required_. Validation: _^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s]{1,150}$_. <br>The name of the fake center. */
 }
 
-// Fake Base Person describes, with basic properties, the fake students, teachers, administrative and services staff workers and other non-University members.
+// Fake Base Person describes, with essential properties, the fake students, teachers, administrative and services staff workers and other non-University members.
 message FakeBasePerson {
-  FakeBaseEntity fake_base_entity = 1; /* Identification of the fake person. */
-  FakeIDDocument fake_id_document = 2; /* _Required_. <br>Unique identification of athe fake person. */
+  FakeBaseEntity fake_base_entity = 1; /* _Required_. _Unique_. <br>Identification of the fake person. */
+  FakeIdDocument fake_id_document = 2; /* _Required_. _Unique_. <br>Unique identification of the fake person. */
   string first_name = 3; /* _Required_. Validation: _^[a-zA-Z0-9]{1,32}$_. <br>The first name of the fake person. */
   string surname = 4; /* _Required_. Validation: _^[a-zA-Z0-9]{1,32}$_. <br>The family name of the fake person. */
-  google.protobuf.StringValue second_surname = 5; /* _Optional_. Default: _none_. Validation: _^[a-zA-Z0-9]{1,32}$_. <br>The second surname of the fake person, which usually comes from its mother. */
+  google.protobuf.StringValue second_surname = 5; /* _Optional_. Default: _null_. Validation: _^[a-zA-Z0-9]{1,32}$_. <br>The second surname of the fake person, which usually comes from its mother. */
+}
+
+// Fake Student describes the fake students studying in The University, also considering ex-students.
+message FakeStudent {
+  FakeBasePerson fake_base_person = 1; /* _Required_. _Unique_. <br>Essential properties of the fake person. */
+  google.protobuf.StringValue username = 2; /* _Optional_. Default: _null_. _Unique_. Validation: _^[a-zA-Z0-9.]{1,50}$_. <br>The name used by The University for identifying its members. */
 }
 
 
@@ -82,15 +91,9 @@ message FakeBasePerson {
 // Models
 
 // It allows you to specify the unique identification number and its type of a fake person.
-message FakeIDDocument {
+message FakeIdDocument {
   string number = 1; /* _Required_. _Unique_ along with id\_document\_type. Validation: _^[a-zA-Z0-9]{1,16}$$_. <br>The identification number of the document of the fake person, which allows you to identify a given document and verify its authenticity. */
-  FakeIDDocumentType type = 2; /* _Required_. _Unique_ along with id\_document\_number. <br>The type of the identification number of the fake person. */
-}
-
-// Fake Student describes the fake students studying in The University, also considering ex-students.
-message FakeStudent {
-  FakeBasePerson fake_base_person = 1; // Basic properties of the fake person.
-  google.protobuf.StringValue username = 2; /* _Optional_. Default: _none_. _Unique_. Validation: _^[a-zA-Z0-9.]{1,50}$_. <br>The name used by The University for identifying its members. */
+  FakeIdDocumentType type = 2; /* _Required_. _Unique_ along with id\_document\_number. <br>The type of the identification number of the fake person. */
 }
 
 
@@ -98,39 +101,39 @@ message FakeStudent {
 
 // Requests and responses
 
-// It allows you to access the complete list of the fake centers.
-message GetAllFakeBaseCentersResponse {
-    repeated FakeBaseCenter fake_base_centers = 1; // List of all fake centers of The University. It mustn't' be empty.'
-}
-
-// It allows you to access the complete list of the fake students.
-message GetAllFakeStudentsResponse {
-    repeated FakeStudent fake_students = 1; // List of all fake students of The University. It mustn't' be empty.'
-}
-
 // It allows you to specify the unique identification number and its type from which the fake student will be retrieved.
-message GetFakeStudentByIDDocumentRequest {
-  FakeIDDocument fake_id_document = 1;  /* _Required_. <br>Identity document of the fake person. */
+message GetFakeStudentByIdDocumentRequest {
+  FakeIdDocument fake_id_document = 1;  /* _Required_. <br>Identity document of the fake person. */
 }
 
 // It allows you to access the fake student retrieved by its unique identification number and its type.
-message GetFakeStudentByIDDocumentResponse {
-    FakeStudent fake_student = 1; // The fake student who has been retrieved.
+message GetFakeStudentByIdDocumentResponse {
+  FakeStudent fake_student = 1; // The fake student who has been retrieved.
 }
 
 // It allows you to specify the unique internal identifier from which the fake student will be retrieved.
-message GetFakeStudentByIDRequest {
+message GetFakeStudentByIdRequest {
   string id = 1; /* _Required_. Validation: _^[a-zA-Z0-9.-]{1,50}$_. <br>Unique internal identifier for the fake student. */
 }
 
 // It allows you to access the fake student retrieved by its unique id.
-message GetFakeStudentByIDResponse {
-    FakeStudent fake_student = 1; // The person who has been retrieved.
+message GetFakeStudentByIdResponse {
+  FakeStudent fake_student = 1; // The person who has been retrieved.
+}
+
+// It allows you to access the complete list of the fake centers.
+message ListFakeBaseCentersResponse {
+  repeated FakeBaseCenter fake_base_centers = 1; // List of all fake centers of The University. It mustn't be empty.
+}
+
+// It allows you to access the complete list of the fake students.
+message ListFakeStudentsResponse {
+  repeated FakeStudent fake_students = 1; // List of all fake students of The University. It mustn't be empty.
 }
 
 // It allows you to set the fake student who will be created.
 message CreateFakeStudentRequest {
-    FakeStudent fake_student = 1; // The fake student who will be created.
+  FakeStudent fake_student = 1; // The fake student who will be created.
 }
 
 // Creating a new fake student will return its unique internal identifier auto-generated by the api.
@@ -139,18 +142,18 @@ message CreateFakeStudentResponse {
 }
 
 // It allows you to specify the unique internal identifier from which the fake student will be removed.
-message DeleteFakeStudentByIDRequest {
+message DeleteFakeStudentByIdRequest {
   string id = 1; /* _Required_. Validation: _^[a-zA-Z0-9.-]{1,50}$_. <br>Unique internal identifier for the fake student. */
 }
 
 // It allows you to set the fake student who will be updated.
 message UpdateFakeStudentRequest {
-    FakeStudent fake_student = 1; // The fake student who will be updated.
+  FakeStudent fake_student = 1; // The fake student who will be updated.
 }
 
 // It allows you to set the fake student who will be upserted.
 message UpsertFakeStudentRequest {
-    FakeStudent fake_student = 1; // The fake student who will be upserted.
+  FakeStudent fake_student = 1; // The fake student who will be upserted.
 }
 
 // Creating or updating the new fake student will return its unique internal identifier auto-generated by the api.

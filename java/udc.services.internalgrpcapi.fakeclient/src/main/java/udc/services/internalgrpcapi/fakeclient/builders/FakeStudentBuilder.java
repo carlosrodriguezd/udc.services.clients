@@ -3,11 +3,10 @@ package udc.services.internalgrpcapi.fakeclient.builders;
 import com.google.protobuf.StringValue;
 
 import udc.services.internalgrpcapi.fakeclient.helpers.RandomHelpers;
-import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeBaseCenter;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeBaseEntity;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeBasePerson;
-import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeIDDocument;
-import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeIDDocumentType;
+import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeIdDocument;
+import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeIdDocumentType;
 import udc.services.internalgrpcapi.fakeclient.protos.fake.Fake.FakeStudent;
 
 public class FakeStudentBuilder {
@@ -15,17 +14,17 @@ public class FakeStudentBuilder {
     private FakeStudent _fakeStudent;
 
     public static final String TEST_ID = "10000";
-    public static final FakeIDDocument FAKE_TEST_ID_DOCUMENT = FakeIDDocument.newBuilder().setNumber("36991036K").setType(FakeIDDocumentType.FAKE_ID_DOCUMENT_TYPE_NIF).build();
+    public static final FakeIdDocument FAKE_TEST_ID_DOCUMENT = FakeIdDocument.newBuilder().setNumber("36991036K").setType(FakeIdDocumentType.FAKE_ID_DOCUMENT_TYPE_NIF).build();
       
     public static final String TEST_FIRST_NAME = "José Filogonio";
     public static final String TEST_SURNAME = "Juez";
     public static final String TEST_SECOND_SURNAME = "Bañuelos";
     public static final String TEST_USERNAME = "filogonio.juez";
 
-    public static final FakeIDDocument TEST_NOT_EXISTING_FAKE_ID_DOCUMENT = FakeIDDocument.newBuilder().setNumber("00010001A").setType(FakeIDDocumentType.FAKE_ID_DOCUMENT_TYPE_NIF).build();
-    public static final FakeIDDocument TEST_NOT_EXISTING_ID_DOCUMENT = FakeIDDocument.newBuilder().setNumber("0001$001A").setType(FakeIDDocumentType.FAKE_ID_DOCUMENT_TYPE_NIF).build();
-    public static final FakeIDDocument TEST_EMPTY_FAKE_ID_DOCUMENT_NUMBER = FakeIDDocument.newBuilder().setNumber(" ").setType(FakeIDDocumentType.FAKE_ID_DOCUMENT_TYPE_NIF).build();
-    public static final FakeIDDocument TEST_EMPTY_FAKE_ID_DOCUMENT_TYPE = FakeIDDocument.newBuilder().setNumber("36991036K").setType(FakeIDDocumentType.FAKE_ID_DOCUMENT_TYPE_UNSPECIFIED).build();
+    public static final FakeIdDocument TEST_NOT_EXISTING_FAKE_ID_DOCUMENT = FakeIdDocument.newBuilder().setNumber("00010001A").setType(FakeIdDocumentType.FAKE_ID_DOCUMENT_TYPE_NIF).build();
+    public static final FakeIdDocument TEST_NOT_EXISTING_ID_DOCUMENT = FakeIdDocument.newBuilder().setNumber("0001$001A").setType(FakeIdDocumentType.FAKE_ID_DOCUMENT_TYPE_NIF).build();
+    public static final FakeIdDocument TEST_EMPTY_FAKE_ID_DOCUMENT_NUMBER = FakeIdDocument.newBuilder().setNumber(" ").setType(FakeIdDocumentType.FAKE_ID_DOCUMENT_TYPE_NIF).build();
+    public static final FakeIdDocument TEST_EMPTY_FAKE_ID_DOCUMENT_TYPE = FakeIdDocument.newBuilder().setNumber("36991036K").setType(FakeIdDocumentType.FAKE_ID_DOCUMENT_TYPE_UNSPECIFIED).build();
     
     public static final String TEST_EMPTY_STRING = " ";
     public static final String TEST_NOT_EXISTING_ID = "00000";
@@ -70,7 +69,7 @@ public class FakeStudentBuilder {
 
     public FakeStudent withRandomValuesAndNif()
     {
-        String randomIDDocumentNumber = RandomHelpers.generateRandomNifIDDocumentNumber();
+        String randomIdDocumentNumber = RandomHelpers.generateRandomNifIdDocumentNumber();
         String randomFirstName = RandomHelpers.generateRandomFirstName();
         String randomSurname = RandomHelpers.generateRandomLastName();
         String randomSecondSurname = RandomHelpers.generateRandomLastName();
@@ -96,9 +95,9 @@ public class FakeStudentBuilder {
         return _fakeStudent;
     }	
     
-    public FakeStudent withRandomValuesAndEmptyIDDocumentNumber()
+    public FakeStudent withRandomValuesAndEmptyIdDocumentNumber()
     {
-        String randomIDDocumentNumber = RandomHelpers.generateRandomNifIDDocumentNumber();
+        String randomIdDocumentNumber = RandomHelpers.generateRandomNifIdDocumentNumber();
         String randomFirstName = RandomHelpers.generateRandomFirstName();
         String randomSurname = RandomHelpers.generateRandomLastName();
         String randomSecondSurname = RandomHelpers.generateRandomLastName();
@@ -125,11 +124,11 @@ public class FakeStudentBuilder {
         return _fakeStudent;
     }	
 
-    public FakeStudent withNewID(FakeStudent fakeStudent, String newID)
+    public FakeStudent withNewId(FakeStudent fakeStudent, String newId)
     {
     	FakeBaseEntity fakeBaseEntity = FakeBaseEntity
     			.newBuilder()
-    			.setId(StringValue.newBuilder().setValue(newID))
+    			.setId(StringValue.newBuilder().setValue(newId))
     			.build();
        	FakeBasePerson fakeBasePerson = FakeBasePerson
     			.newBuilder()
@@ -148,7 +147,7 @@ public class FakeStudentBuilder {
     	return _fakeStudent;
     }
 
-    public FakeStudent withNewIDDocumentNumber(FakeStudent fakeStudent, String idDocumentNumber, FakeIDDocumentType fakeIDDocumentType)
+    public FakeStudent withNewIdDocumentNumber(FakeStudent fakeStudent, String idDocumentNumber, FakeIdDocumentType fakeIdDocumentType)
     {
   
     	FakeBaseEntity.Builder fakeBaseEntityBuilder = FakeBaseEntity.newBuilder();
@@ -161,7 +160,7 @@ public class FakeStudentBuilder {
        	FakeBasePerson fakeBasePerson = FakeBasePerson
     			.newBuilder()
     			.setFakeBaseEntity(fakeBaseEntity)
-    			.setFakeIdDocument(FakeIDDocument.newBuilder().setNumber(idDocumentNumber).setType(fakeIDDocumentType).build())
+    			.setFakeIdDocument(FakeIdDocument.newBuilder().setNumber(idDocumentNumber).setType(fakeIdDocumentType).build())
     			.setFirstName(fakeStudent.getFakeBasePerson().getFirstName())
     			.setSurname(fakeStudent.getFakeBasePerson().getSurname())
     			.setSecondSurname(fakeStudent.getFakeBasePerson().getSecondSurname())
